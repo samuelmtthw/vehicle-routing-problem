@@ -1,0 +1,428 @@
+============================================================
+HCVRP Heuristic Solver — K-Means + Bin Packing
+============================================================
+Total scenarios to solve: 41
+
+Solving: COMPANY-1 | Depot Balikpapan | 2025-12-26
+  AWBs           : 38
+  Clusters (k)   : 5
+  Vehicles used  : 9  {'Blind Van': 1, 'Engkel (CDE)': 4, 'Pickup Bak': 2, 'CDD Box': 2}
+  Total distance : 937.79 km
+  Total cost     : Rp 1,147,011
+  Avg weight util: 74.0%
+  Avg volume util: 79.3%
+  Runtime        : 3.66s
+
+Solving: COMPANY-1 | Depot Batam | 2025-12-18
+  AWBs           : 28
+  Clusters (k)   : 2
+  Vehicles used  : 7  {'Blind Van': 3, 'Pickup Bak': 3, 'Engkel (CDE)': 1}
+  Total distance : 21.98 km
+  Total cost     : Rp 24,906
+  Avg weight util: 39.2%
+  Avg volume util: 80.9%
+  Runtime        : 2.48s
+
+Solving: COMPANY-1 | Depot Batam | 2025-12-24
+  AWBs           : 29
+  Clusters (k)   : 1
+  Vehicles used  : 1  {'CDD Box': 1}
+  Total distance : 67.09 km
+  Total cost     : Rp 101,378
+  Avg weight util: 9.0%
+  Avg volume util: 86.8%
+  Runtime        : 0.4s
+
+Solving: COMPANY-1 | Depot Makassar | 2025-12-19
+  AWBs           : 26
+  Clusters (k)   : 3
+  Vehicles used  : 7  {'Blind Van': 1, 'Engkel (CDE)': 4, 'Pickup Bak': 2}
+  Total distance : 2217.03 km
+  Total cost     : Rp 1,421,613
+  Avg weight util: 74.7%
+  Avg volume util: 64.0%
+  Runtime        : 2.47s
+
+Solving: COMPANY-1 | Depot Makassar | 2025-12-23
+  AWBs           : 63
+  Clusters (k)   : 8
+  Vehicles used  : 16  {'Blind Van': 3, 'Engkel (CDE)': 6, 'Pickup Bak': 3, 'CDD Box': 4}
+  Total distance : 233.62 km
+  Total cost     : Rp 353,030
+  Avg weight util: 77.4%
+  Avg volume util: 68.5%
+  Runtime        : 5.66s
+
+Solving: COMPANY-1 | Depot Manado | 2025-12-18
+  AWBs           : 32
+  Clusters (k)   : 1
+  Vehicles used  : 1  {'CDD Box': 1}
+  Total distance : 892.55 km
+  Total cost     : Rp 1,348,745
+  Avg weight util: 23.9%
+  Avg volume util: 96.5%
+  Runtime        : 0.41s
+
+Solving: COMPANY-1 | Depot Manado | 2025-12-24
+  AWBs           : 17
+  Clusters (k)   : 1
+  Vehicles used  : 1  {'CDD Box': 1}
+  Total distance : 152.01 km
+  Total cost     : Rp 229,711
+  Avg weight util: 19.8%
+  Avg volume util: 68.3%
+  Runtime        : 0.39s
+
+Solving: COMPANY-1 | Depot Medan | 2025-12-23
+  AWBs           : 83
+  Clusters (k)   : 7
+  Vehicles used  : 23  {'Blind Van': 8, 'Pickup Bak': 8, 'Engkel (CDE)': 7}
+  Total distance : 440.83 km
+  Total cost     : Rp 499,613
+  Avg weight util: 20.2%
+  Avg volume util: 88.3%
+  Runtime        : 9.9s
+
+Solving: COMPANY-1 | Depot Medan | 2025-12-24
+  AWBs           : 25
+  Clusters (k)   : 2
+  Vehicles used  : 2  {'CDD Box': 1, 'Engkel (CDE)': 1}
+  Total distance : 168.15 km
+  Total cost     : Rp 219,656
+  Avg weight util: 24.2%
+  Avg volume util: 78.2%
+  Runtime        : 1.05s
+
+Solving: COMPANY-1 | Depot Pekanbaru | 2025-12-08
+  AWBs           : 22
+  Clusters (k)   : 1
+  Vehicles used  : 1  {'CDD Box': 1}
+  Total distance : 2463.93 km
+  Total cost     : Rp 3,723,275
+  Avg weight util: 51.7%
+  Avg volume util: 59.2%
+  Runtime        : 0.4s
+
+Solving: COMPANY-1 | Depot Pekanbaru | 2025-12-11
+  AWBs           : 28
+  Clusters (k)   : 1
+  Vehicles used  : 1  {'CDD Box': 1}
+  Total distance : 366.61 km
+  Total cost     : Rp 553,987
+  Avg weight util: 5.8%
+  Avg volume util: 63.5%
+  Runtime        : 0.4s
+
+Solving: COMPANY-1 | Depot Pekanbaru | 2025-12-18
+  AWBs           : 44
+  Clusters (k)   : 1
+  Vehicles used  : 1  {'CDD Box': 1}
+  Total distance : 39.63 km
+  Total cost     : Rp 59,890
+  Avg weight util: 31.5%
+  Avg volume util: 74.1%
+  Runtime        : 0.41s
+
+Solving: COMPANY-1 | Depot Pekanbaru | 2025-12-23
+  AWBs           : 21
+  Clusters (k)   : 1
+  Vehicles used  : 1  {'Pickup Bak': 1}
+  Total distance : 335.54 km
+  Total cost     : Rp 190,137
+  Avg weight util: 50.1%
+  Avg volume util: 98.2%
+  Runtime        : 0.79s
+
+Solving: COMPANY-1 | Depot Pekanbaru | 2025-12-24
+  AWBs           : 27
+  Clusters (k)   : 1
+  Vehicles used  : 1  {'Pickup Bak': 1}
+  Total distance : 46.07 km
+  Total cost     : Rp 26,107
+  Avg weight util: 63.2%
+  Avg volume util: 91.7%
+  Runtime        : 0.4s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-07-02
+  AWBs           : 28
+  Clusters (k)   : 3
+  Vehicles used  : 10  {'Blind Van': 8, 'CDD Box': 2}
+  Total distance : 250.8 km
+  Total cost     : Rp 378,982
+  Avg weight util: 78.3%
+  Avg volume util: 81.9%
+  Runtime        : 3.87s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-07-11
+  AWBs           : 32
+  Clusters (k)   : 8
+  Vehicles used  : 25  {'Engkel (CDE)': 3, 'Pickup Bak': 19, 'Blind Van': 1, 'CDD Box': 2}
+  Total distance : 409.94 km
+  Total cost     : Rp 459,307
+  Avg weight util: 27.5%
+  Avg volume util: 74.8%
+  Runtime        : 9.37s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-07-21
+  AWBs           : 33
+  Clusters (k)   : 3
+  Vehicles used  : 17  {'Blind Van': 16, 'Engkel (CDE)': 1}
+  Total distance : 173.04 km
+  Total cost     : Rp 196,114
+  Avg weight util: 75.7%
+  Avg volume util: 74.5%
+  Runtime        : 5.99s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-07-30
+  AWBs           : 29
+  Clusters (k)   : 6
+  Vehicles used  : 15  {'Blind Van': 3, 'Pickup Bak': 7, 'CDD Box': 4, 'Engkel (CDE)': 1}
+  Total distance : 443.86 km
+  Total cost     : Rp 629,062
+  Avg weight util: 70.9%
+  Avg volume util: 70.8%
+  Runtime        : 5.32s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-08-01
+  AWBs           : 34
+  Clusters (k)   : 3
+  Vehicles used  : 9  {'Blind Van': 7, 'CDD Box': 1, 'Engkel (CDE)': 1}
+  Total distance : 292.48 km
+  Total cost     : Rp 385,717
+  Avg weight util: 82.9%
+  Avg volume util: 79.5%
+  Runtime        : 4.1s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-08-11
+  AWBs           : 36
+  Clusters (k)   : 4
+  Vehicles used  : 16  {'Pickup Bak': 1, 'Blind Van': 13, 'CDD Box': 2}
+  Total distance : 322.69 km
+  Total cost     : Rp 487,619
+  Avg weight util: 76.4%
+  Avg volume util: 68.1%
+  Runtime        : 6.1s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-08-20
+  AWBs           : 30
+  Clusters (k)   : 6
+  Vehicles used  : 20  {'Pickup Bak': 12, 'Blind Van': 4, 'Engkel (CDE)': 3, 'CDD Box': 1}
+  Total distance : 356.04 km
+  Total cost     : Rp 440,633
+  Avg weight util: 76.4%
+  Avg volume util: 75.8%
+  Runtime        : 7.01s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-08-29
+  AWBs           : 35
+  Clusters (k)   : 3
+  Vehicles used  : 10  {'Blind Van': 8, 'CDD Box': 1, 'Engkel (CDE)': 1}
+  Total distance : 292.48 km
+  Total cost     : Rp 385,717
+  Avg weight util: 80.2%
+  Avg volume util: 79.5%
+  Runtime        : 3.56s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-09-01
+  AWBs           : 40
+  Clusters (k)   : 4
+  Vehicles used  : 14  {'Blind Van': 11, 'Pickup Bak': 1, 'CDD Box': 2}
+  Total distance : 321.93 km
+  Total cost     : Rp 486,466
+  Avg weight util: 71.3%
+  Avg volume util: 77.2%
+  Runtime        : 4.99s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-09-11
+  AWBs           : 30
+  Clusters (k)   : 7
+  Vehicles used  : 21  {'Pickup Bak': 15, 'Engkel (CDE)': 4, 'CDD Box': 2}
+  Total distance : 295.15 km
+  Total cost     : Rp 410,700
+  Avg weight util: 71.7%
+  Avg volume util: 70.2%
+  Runtime        : 7.35s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-09-20
+  AWBs           : 35
+  Clusters (k)   : 7
+  Vehicles used  : 23  {'Pickup Bak': 17, 'Engkel (CDE)': 2, 'Blind Van': 2, 'CDD Box': 2}
+  Total distance : 317.24 km
+  Total cost     : Rp 439,415
+  Avg weight util: 66.1%
+  Avg volume util: 65.4%
+  Runtime        : 8.23s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-09-29
+  AWBs           : 35
+  Clusters (k)   : 3
+  Vehicles used  : 9  {'Blind Van': 8, 'CDD Box': 1}
+  Total distance : 255.67 km
+  Total cost     : Rp 386,342
+  Avg weight util: 77.6%
+  Avg volume util: 92.6%
+  Runtime        : 3.19s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-10-01
+  AWBs           : 35
+  Clusters (k)   : 11
+  Vehicles used  : 25  {'Engkel (CDE)': 10, 'Pickup Bak': 11, 'CDD Box': 3, 'Blind Van': 1}
+  Total distance : 196.65 km
+  Total cost     : Rp 270,968
+  Avg weight util: 81.9%
+  Avg volume util: 80.7%
+  Runtime        : 8.77s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-10-10
+  AWBs           : 36
+  Clusters (k)   : 9
+  Vehicles used  : 23  {'Pickup Bak': 10, 'Engkel (CDE)': 9, 'Blind Van': 2, 'CDD Box': 2}
+  Total distance : 452.31 km
+  Total cost     : Rp 546,893
+  Avg weight util: 72.3%
+  Avg volume util: 73.3%
+  Runtime        : 8.05s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-10-20
+  AWBs           : 35
+  Clusters (k)   : 4
+  Vehicles used  : 16  {'Blind Van': 14, 'CDD Box': 2}
+  Total distance : 290.55 km
+  Total cost     : Rp 439,047
+  Avg weight util: 71.1%
+  Avg volume util: 77.8%
+  Runtime        : 5.76s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-10-30
+  AWBs           : 31
+  Clusters (k)   : 6
+  Vehicles used  : 15  {'Engkel (CDE)': 6, 'Pickup Bak': 4, 'Blind Van': 3, 'CDD Box': 2}
+  Total distance : 358.42 km
+  Total cost     : Rp 496,204
+  Avg weight util: 75.3%
+  Avg volume util: 79.5%
+  Runtime        : 5.72s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-11-01
+  AWBs           : 46
+  Clusters (k)   : 9
+  Vehicles used  : 24  {'Pickup Bak': 13, 'Blind Van': 5, 'Engkel (CDE)': 1, 'CDD Box': 5}
+  Total distance : 505.96 km
+  Total cost     : Rp 703,329
+  Avg weight util: 75.3%
+  Avg volume util: 77.5%
+  Runtime        : 8.44s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-11-11
+  AWBs           : 32
+  Clusters (k)   : 17
+  Vehicles used  : 26  {'CDD Box': 12, 'Engkel (CDE)': 12, 'Pickup Bak': 1, 'Blind Van': 1}
+  Total distance : 611.69 km
+  Total cost     : Rp 833,237
+  Avg weight util: 39.2%
+  Avg volume util: 80.5%
+  Runtime        : 9.15s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-11-20
+  AWBs           : 29
+  Clusters (k)   : 6
+  Vehicles used  : 18  {'Pickup Bak': 11, 'Blind Van': 3, 'Engkel (CDE)': 3, 'CDD Box': 1}
+  Total distance : 294.12 km
+  Total cost     : Rp 351,914
+  Avg weight util: 26.2%
+  Avg volume util: 74.8%
+  Runtime        : 6.37s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-11-28
+  AWBs           : 36
+  Clusters (k)   : 7
+  Vehicles used  : 21  {'Blind Van': 4, 'Pickup Bak': 12, 'Engkel (CDE)': 3, 'CDD Box': 2}
+  Total distance : 411.19 km
+  Total cost     : Rp 522,418
+  Avg weight util: 75.5%
+  Avg volume util: 75.5%
+  Runtime        : 7.4s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-12-10
+  AWBs           : 30
+  Clusters (k)   : 10
+  Vehicles used  : 25  {'Engkel (CDE)': 9, 'Pickup Bak': 13, 'Blind Van': 1, 'CDD Box': 2}
+  Total distance : 369.23 km
+  Total cost     : Rp 524,263
+  Avg weight util: 46.8%
+  Avg volume util: 82.1%
+  Runtime        : 8.79s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-12-11
+  AWBs           : 33
+  Clusters (k)   : 6
+  Vehicles used  : 14  {'Blind Van': 1, 'Pickup Bak': 9, 'CDD Box': 2, 'Engkel (CDE)': 2}
+  Total distance : 395.13 km
+  Total cost     : Rp 539,372
+  Avg weight util: 73.9%
+  Avg volume util: 76.6%
+  Runtime        : 4.94s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-12-16
+  AWBs           : 36
+  Clusters (k)   : 15
+  Vehicles used  : 28  {'Engkel (CDE)': 14, 'Pickup Bak': 4, 'CDD Box': 9, 'Blind Van': 1}
+  Total distance : 599.27 km
+  Total cost     : Rp 780,460
+  Avg weight util: 41.0%
+  Avg volume util: 79.4%
+  Runtime        : 9.9s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-12-25
+  AWBs           : 31
+  Clusters (k)   : 6
+  Vehicles used  : 19  {'Blind Van': 4, 'Pickup Bak': 10, 'CDD Box': 2, 'Engkel (CDE)': 3}
+  Total distance : 237.47 km
+  Total cost     : Rp 323,310
+  Avg weight util: 69.9%
+  Avg volume util: 72.7%
+  Runtime        : 7.45s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2026-01-01
+  AWBs           : 31
+  Clusters (k)   : 6
+  Vehicles used  : 20  {'Pickup Bak': 14, 'Engkel (CDE)': 3, 'Blind Van': 1, 'CDD Box': 2}
+  Total distance : 314.85 km
+  Total cost     : Rp 375,820
+  Avg weight util: 72.5%
+  Avg volume util: 70.6%
+  Runtime        : 7.42s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2026-01-02
+  AWBs           : 34
+  Clusters (k)   : 5
+  Vehicles used  : 20  {'Blind Van': 15, 'Pickup Bak': 2, 'CDD Box': 2, 'Engkel (CDE)': 1}
+  Total distance : 361.73 km
+  Total cost     : Rp 506,869
+  Avg weight util: 56.8%
+  Avg volume util: 91.1%
+  Runtime        : 7.02s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2026-01-03
+  AWBs           : 34
+  Clusters (k)   : 5
+  Vehicles used  : 21  {'Blind Van': 12, 'Pickup Bak': 7, 'Engkel (CDE)': 1, 'CDD Box': 1}
+  Total distance : 182.73 km
+  Total cost     : Rp 253,196
+  Avg weight util: 60.8%
+  Avg volume util: 94.3%
+  Runtime        : 7.75s
+
+============================================================
+AGGREGATE RESULTS
+============================================================
+Scenarios solved       : 41
+Avg AWBs per scenario  : 33.9
+Avg vehicles used      : 14.05
+Avg total distance km  : 431.60
+Avg total cost Rp      : 547,620
+Avg weight utilisation : 57.5%
+Avg volume utilisation : 77.9%
+Avg runtime per scenario: 5.14s
+
+Results saved → results_heuristic.csv

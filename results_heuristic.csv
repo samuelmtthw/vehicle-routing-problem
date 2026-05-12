@@ -1,0 +1,42 @@
+source,depot,date,awb_count,k_clusters,vehicles_used,vehicle_breakdown,total_distance_km,total_cost_rp,avg_weight_util_pct,avg_volume_util_pct,runtime_sec,distance_method
+COMPANY-1,Depot Balikpapan,2025-12-26,38,5,9,"{'Blind Van': 1, 'Engkel (CDE)': 4, 'Pickup Bak': 2, 'CDD Box': 2}",937.79,1147011,74.0,79.3,3.66,OSRM
+COMPANY-1,Depot Batam,2025-12-18,28,2,7,"{'Blind Van': 3, 'Pickup Bak': 3, 'Engkel (CDE)': 1}",21.98,24906,39.2,80.9,2.48,OSRM
+COMPANY-1,Depot Batam,2025-12-24,29,1,1,{'CDD Box': 1},67.09,101378,9.0,86.8,0.4,OSRM
+COMPANY-1,Depot Makassar,2025-12-19,26,3,7,"{'Blind Van': 1, 'Engkel (CDE)': 4, 'Pickup Bak': 2}",2217.03,1421613,74.7,64.0,2.47,OSRM
+COMPANY-1,Depot Makassar,2025-12-23,63,8,16,"{'Blind Van': 3, 'Engkel (CDE)': 6, 'Pickup Bak': 3, 'CDD Box': 4}",233.62,353030,77.4,68.5,5.66,OSRM
+COMPANY-1,Depot Manado,2025-12-18,32,1,1,{'CDD Box': 1},892.55,1348745,23.9,96.5,0.41,OSRM
+COMPANY-1,Depot Manado,2025-12-24,17,1,1,{'CDD Box': 1},152.01,229711,19.8,68.3,0.39,OSRM
+COMPANY-1,Depot Medan,2025-12-23,83,7,23,"{'Blind Van': 8, 'Pickup Bak': 8, 'Engkel (CDE)': 7}",440.83,499613,20.2,88.3,9.9,OSRM
+COMPANY-1,Depot Medan,2025-12-24,25,2,2,"{'CDD Box': 1, 'Engkel (CDE)': 1}",168.15,219656,24.2,78.2,1.05,OSRM
+COMPANY-1,Depot Pekanbaru,2025-12-08,22,1,1,{'CDD Box': 1},2463.93,3723275,51.7,59.2,0.4,OSRM
+COMPANY-1,Depot Pekanbaru,2025-12-11,28,1,1,{'CDD Box': 1},366.61,553987,5.8,63.5,0.4,OSRM
+COMPANY-1,Depot Pekanbaru,2025-12-18,44,1,1,{'CDD Box': 1},39.63,59890,31.5,74.1,0.41,OSRM
+COMPANY-1,Depot Pekanbaru,2025-12-23,21,1,1,{'Pickup Bak': 1},335.54,190137,50.1,98.2,0.79,OSRM
+COMPANY-1,Depot Pekanbaru,2025-12-24,27,1,1,{'Pickup Bak': 1},46.07,26107,63.2,91.7,0.4,OSRM
+COMPANY-2,Depot Jatiasih,2025-07-02,28,3,10,"{'Blind Van': 8, 'CDD Box': 2}",250.8,378982,78.3,81.9,3.87,OSRM
+COMPANY-2,Depot Jatiasih,2025-07-11,32,8,25,"{'Engkel (CDE)': 3, 'Pickup Bak': 19, 'Blind Van': 1, 'CDD Box': 2}",409.94,459307,27.5,74.8,9.37,OSRM
+COMPANY-2,Depot Jatiasih,2025-07-21,33,3,17,"{'Blind Van': 16, 'Engkel (CDE)': 1}",173.04,196114,75.7,74.5,5.99,OSRM
+COMPANY-2,Depot Jatiasih,2025-07-30,29,6,15,"{'Blind Van': 3, 'Pickup Bak': 7, 'CDD Box': 4, 'Engkel (CDE)': 1}",443.86,629062,70.9,70.8,5.32,OSRM
+COMPANY-2,Depot Jatiasih,2025-08-01,34,3,9,"{'Blind Van': 7, 'CDD Box': 1, 'Engkel (CDE)': 1}",292.48,385717,82.9,79.5,4.1,OSRM
+COMPANY-2,Depot Jatiasih,2025-08-11,36,4,16,"{'Pickup Bak': 1, 'Blind Van': 13, 'CDD Box': 2}",322.69,487619,76.4,68.1,6.1,OSRM
+COMPANY-2,Depot Jatiasih,2025-08-20,30,6,20,"{'Pickup Bak': 12, 'Blind Van': 4, 'Engkel (CDE)': 3, 'CDD Box': 1}",356.04,440633,76.4,75.8,7.01,OSRM
+COMPANY-2,Depot Jatiasih,2025-08-29,35,3,10,"{'Blind Van': 8, 'CDD Box': 1, 'Engkel (CDE)': 1}",292.48,385717,80.2,79.5,3.56,OSRM
+COMPANY-2,Depot Jatiasih,2025-09-01,40,4,14,"{'Blind Van': 11, 'Pickup Bak': 1, 'CDD Box': 2}",321.93,486466,71.3,77.2,4.99,OSRM
+COMPANY-2,Depot Jatiasih,2025-09-11,30,7,21,"{'Pickup Bak': 15, 'Engkel (CDE)': 4, 'CDD Box': 2}",295.15,410700,71.7,70.2,7.35,OSRM
+COMPANY-2,Depot Jatiasih,2025-09-20,35,7,23,"{'Pickup Bak': 17, 'Engkel (CDE)': 2, 'Blind Van': 2, 'CDD Box': 2}",317.24,439415,66.1,65.4,8.23,OSRM
+COMPANY-2,Depot Jatiasih,2025-09-29,35,3,9,"{'Blind Van': 8, 'CDD Box': 1}",255.67,386342,77.6,92.6,3.19,OSRM
+COMPANY-2,Depot Jatiasih,2025-10-01,35,11,25,"{'Engkel (CDE)': 10, 'Pickup Bak': 11, 'CDD Box': 3, 'Blind Van': 1}",196.65,270968,81.9,80.7,8.77,OSRM
+COMPANY-2,Depot Jatiasih,2025-10-10,36,9,23,"{'Pickup Bak': 10, 'Engkel (CDE)': 9, 'Blind Van': 2, 'CDD Box': 2}",452.31,546893,72.3,73.3,8.05,OSRM
+COMPANY-2,Depot Jatiasih,2025-10-20,35,4,16,"{'Blind Van': 14, 'CDD Box': 2}",290.55,439047,71.1,77.8,5.76,OSRM
+COMPANY-2,Depot Jatiasih,2025-10-30,31,6,15,"{'Engkel (CDE)': 6, 'Pickup Bak': 4, 'Blind Van': 3, 'CDD Box': 2}",358.42,496204,75.3,79.5,5.72,OSRM
+COMPANY-2,Depot Jatiasih,2025-11-01,46,9,24,"{'Pickup Bak': 13, 'Blind Van': 5, 'Engkel (CDE)': 1, 'CDD Box': 5}",505.96,703329,75.3,77.5,8.44,OSRM
+COMPANY-2,Depot Jatiasih,2025-11-11,32,17,26,"{'CDD Box': 12, 'Engkel (CDE)': 12, 'Pickup Bak': 1, 'Blind Van': 1}",611.69,833237,39.2,80.5,9.15,OSRM
+COMPANY-2,Depot Jatiasih,2025-11-20,29,6,18,"{'Pickup Bak': 11, 'Blind Van': 3, 'Engkel (CDE)': 3, 'CDD Box': 1}",294.12,351914,26.2,74.8,6.37,OSRM
+COMPANY-2,Depot Jatiasih,2025-11-28,36,7,21,"{'Blind Van': 4, 'Pickup Bak': 12, 'Engkel (CDE)': 3, 'CDD Box': 2}",411.19,522418,75.5,75.5,7.4,OSRM
+COMPANY-2,Depot Jatiasih,2025-12-10,30,10,25,"{'Engkel (CDE)': 9, 'Pickup Bak': 13, 'Blind Van': 1, 'CDD Box': 2}",369.23,524263,46.8,82.1,8.79,OSRM
+COMPANY-2,Depot Jatiasih,2025-12-11,33,6,14,"{'Blind Van': 1, 'Pickup Bak': 9, 'CDD Box': 2, 'Engkel (CDE)': 2}",395.13,539372,73.9,76.6,4.94,OSRM
+COMPANY-2,Depot Jatiasih,2025-12-16,36,15,28,"{'Engkel (CDE)': 14, 'Pickup Bak': 4, 'CDD Box': 9, 'Blind Van': 1}",599.27,780460,41.0,79.4,9.9,OSRM
+COMPANY-2,Depot Jatiasih,2025-12-25,31,6,19,"{'Blind Van': 4, 'Pickup Bak': 10, 'CDD Box': 2, 'Engkel (CDE)': 3}",237.47,323310,69.9,72.7,7.45,OSRM
+COMPANY-2,Depot Jatiasih,2026-01-01,31,6,20,"{'Pickup Bak': 14, 'Engkel (CDE)': 3, 'Blind Van': 1, 'CDD Box': 2}",314.85,375820,72.5,70.6,7.42,OSRM
+COMPANY-2,Depot Jatiasih,2026-01-02,34,5,20,"{'Blind Van': 15, 'Pickup Bak': 2, 'CDD Box': 2, 'Engkel (CDE)': 1}",361.73,506869,56.8,91.1,7.02,OSRM
+COMPANY-2,Depot Jatiasih,2026-01-03,34,5,21,"{'Blind Van': 12, 'Pickup Bak': 7, 'Engkel (CDE)': 1, 'CDD Box': 1}",182.73,253196,60.8,94.3,7.75,OSRM

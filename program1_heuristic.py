@@ -32,15 +32,20 @@ warnings.filterwarnings("ignore")
 # 1. FLEET CONFIGURATION
 # ─────────────────────────────────────────────────────────────
 FLEET = [
-    {"type": "Blind Van",   "max_weight": 830,  "max_volume": 2.0,  "fixed_cost": 150_000},
-    {"type": "Pickup Bak",  "max_weight": 1250, "max_volume": 5.0,  "fixed_cost": 200_000},
-    {"type": "Engkel (CDE)","max_weight": 2250, "max_volume": 9.0,  "fixed_cost": 300_000},
-    {"type": "CDD Box",     "max_weight": 4500, "max_volume": 15.0, "fixed_cost": 450_000},
+    {"type": "Blind Van",    "max_weight": 830,  "max_volume": 2.0,  "fuel_km_per_liter": 13.5},
+    {"type": "Pickup Bak",   "max_weight": 1250, "max_volume": 5.0,  "fuel_km_per_liter": 12.0},
+    {"type": "Engkel (CDE)", "max_weight": 2250, "max_volume": 9.0,  "fuel_km_per_liter": 6.0},
+    {"type": "CDD Box",      "max_weight": 4500, "max_volume": 15.0, "fuel_km_per_liter": 4.5},
 ]
 # Sort ascending by capacity so Bin Packing tries smallest fitting vehicle first
 FLEET_SORTED = sorted(FLEET, key=lambda v: v["max_weight"])
 
-COST_PER_KM = 5_000   # Rp per km (variable cost, uniform across vehicle types)
+FUEL_PRICE_PER_LITER = 6_800  # Rp per liter (Solar/Diesel, 2025)
+
+def route_cost_rp(distance_km, vehicle_type_dict):
+    """total_cost = distance * (1 / fuel_efficiency) * fuel_price"""
+    liters = distance_km / vehicle_type_dict["fuel_km_per_liter"]
+    return liters * FUEL_PRICE_PER_LITER
 
 # ─────────────────────────────────────────────────────────────
 # 2. DISTANCE UTILITIES
@@ -412,7 +417,7 @@ def solve_scenario(awbs):
 
         # Vehicle cost
         vtype      = next(f for f in FLEET_SORTED if f["type"] == vehicle["vehicle_type"])
-        route_cost = vtype["fixed_cost"] + route_km * COST_PER_KM
+        route_cost = route_cost_rp(route_km, vtype)
 
         total_distance_km += route_km
         routes_detail.append({
@@ -442,7 +447,7 @@ def solve_scenario(awbs):
         "vehicles_used":      vehicles_used,
         "vehicle_breakdown":  vehicle_counts,
         "total_distance_km":  round(total_distance_km, 2),
-        "total_cost_rp":      round(total_cost),
+        "total_cost_rp":      round(total_cost),  # fuel cost only: distance * (1/efficiency) * fuel_price
         "avg_weight_util_pct": round(avg_weight_util, 1),
         "avg_volume_util_pct": round(avg_volume_util, 1),
         "k_clusters_used":    k_used,

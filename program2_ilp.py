@@ -41,25 +41,32 @@ warnings.filterwarnings("ignore")
 # 1. FLEET CONFIGURATION  (identical to Program 1)
 # ─────────────────────────────────────────────────────────────
 FLEET = [
-    {"type": "Blind Van",    "max_weight": 830,  "max_volume": 2.0,  "fixed_cost": 150_000},
-    {"type": "Pickup Bak",   "max_weight": 1250, "max_volume": 5.0,  "fixed_cost": 200_000},
-    {"type": "Engkel (CDE)", "max_weight": 2250, "max_volume": 9.0,  "fixed_cost": 300_000},
-    {"type": "CDD Box",      "max_weight": 4500, "max_volume": 15.0, "fixed_cost": 450_000},
+    {"type": "Blind Van",    "max_weight": 830,  "max_volume": 2.0,  "fuel_km_per_liter": 13.5},
+    {"type": "Pickup Bak",   "max_weight": 1250, "max_volume": 5.0,  "fuel_km_per_liter": 12.0},
+    {"type": "Engkel (CDE)", "max_weight": 2250, "max_volume": 9.0,  "fuel_km_per_liter": 6.0},
+    {"type": "CDD Box",      "max_weight": 4500, "max_volume": 15.0, "fuel_km_per_liter": 4.5},
 ]
 
-COST_PER_KM   = 5_000    # Rp per km
+FUEL_PRICE_PER_LITER = 6_800  # Rp per liter (Solar/Diesel, 2025)
+
+def route_cost_rp(distance_km, vehicle_type_dict):
+    """total_cost = distance * (1 / fuel_efficiency) * fuel_price"""
+    liters = distance_km / vehicle_type_dict["fuel_km_per_liter"]
+    return liters * FUEL_PRICE_PER_LITER
 VOLUME_SCALE  = 1_000    # OR-Tools requires integer dimensions;
                           # multiply volume (CBM) by this to preserve 3 decimal places
 WEIGHT_SCALE  = 1        # weight already in kg integers — no scaling needed
 DIST_SCALE    = 100      # store distances as integer centimetres (km * 100)
 
-# Fixed cost weight relative to distance cost.
-# Set high enough that the solver minimises vehicles first,
-# then minimises distance. 1 fixed-cost unit = this many distance units.
-# We map: fixed_cost_rp / cost_per_km = km equivalent, then * DIST_SCALE
-def fixed_cost_scaled(vehicle_fixed_cost_rp):
-    km_equiv = vehicle_fixed_cost_rp / COST_PER_KM
-    return int(km_equiv * DIST_SCALE)
+# Fixed cost per vehicle in distance units.
+# We use a uniform high penalty to discourage unnecessary vehicle use,
+# since the actual cost formula is purely fuel-based.
+# 200 km equivalent per vehicle activation (= 200 * DIST_SCALE units).
+VEHICLE_ACTIVATION_PENALTY_KM = 200
+
+def fixed_cost_scaled(vehicle_type_dict):
+    """Convert vehicle activation penalty to OR-Tools distance units."""
+    return int(VEHICLE_ACTIVATION_PENALTY_KM * DIST_SCALE)
 
 # Time limit in seconds for OR-Tools solver per scenario.
 # Increase for larger instances or better solution quality.
@@ -205,7 +212,7 @@ def build_ortools_data(awbs, dist_matrix_km):
     volume_capacities = [int(v["max_volume"] * VOLUME_SCALE) for v in vehicle_types]
 
     # ── Fixed costs per vehicle (scaled to distance units) ──
-    vehicle_fixed_costs = [fixed_cost_scaled(v["fixed_cost"]) for v in vehicle_types]
+    vehicle_fixed_costs = [fixed_cost_scaled(v) for v in vehicle_types]
 
     return {
         "distance_matrix":    dist_int,
@@ -339,7 +346,7 @@ def solve_with_ortools(data, awbs, time_limit_sec=SOLVER_TIME_LIMIT_SEC):
         w_load     = solution.Value(weight_dim.CumulVar(end_index)) / WEIGHT_SCALE
         v_load     = solution.Value(volume_dim.CumulVar(end_index)) / VOLUME_SCALE
 
-        route_cost = vtype["fixed_cost"] + route_km * COST_PER_KM
+        route_cost = route_cost_rp(route_km, vtype)
         total_distance_km += route_km
 
         routes_detail.append({
