@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+:root {
+  --bg: #08090c; --bg2: #0f1117; --bg3: #161922; --bg4: #1c2030; --bg5: #232840;
+  --border: #252b3b; --border2: #2e3650;
+  --text: #eceef5; --text2: #8892aa; --text3: #4d5670;
+  --blue: #4f8ef7; --blue2: #2563eb; --green: #22d3a0; --orange: #f97316;
+  --purple: #a855f7; --red: #ef4444; --yellow: #eab308; --cyan: #06b6d4;
+  --mono: 'Space Mono', monospace; --sans: 'Plus Jakarta Sans', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body, #root { background: var(--bg); color: var(--text); font-family: var(--sans); height: 100%; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg2); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+.leaflet-container { background: #0f1117 !important; font-family: var(--sans) !important; }
+.leaflet-tile { filter: brightness(.6) saturate(.5) hue-rotate(190deg); }
+.leaflet-popup-content-wrapper { background: var(--bg3) !important; color: var(--text) !important; border: 1px solid var(--border2) !important; border-radius: 10px !important; box-shadow: 0 8px 32px rgba(0,0,0,.6) !important; font-family: var(--sans) !important; padding: 0 !important; }
+.leaflet-popup-content { margin: 0 !important; }
+.leaflet-popup-tip-container { display: none; }
+.leaflet-control-zoom a { background: var(--bg3) !important; color: var(--text2) !important; border-color: var(--border) !important; }
+.leaflet-control-zoom a:hover { background: var(--bg4) !important; color: var(--text) !important; }
+.leaflet-control-attribution { background: rgba(8,9,12,.8) !important; color: var(--text3) !important; font-size: 9px !important; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideIn { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: translateX(0); } }
+.fade-in { animation: fadeIn .25s ease forwards; }
+.slide-in { animation: slideIn .2s ease forwards; }

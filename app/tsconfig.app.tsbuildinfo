@@ -1,0 +1,1 @@
+{"root":["./src/App.tsx","./src/main.tsx","./src/components/ui/Badge.tsx","./src/components/ui/Card.tsx","./src/components/ui/Navbar.tsx","./src/components/ui/StatCard.tsx","./src/components/ui/UtilBar.tsx","./src/lib/utils.ts","./src/pages/Dashboard.tsx","./src/pages/ScenarioDetail.tsx","./src/pages/Scenarios.tsx","./src/types/index.ts"],"version":"6.0.3"}
