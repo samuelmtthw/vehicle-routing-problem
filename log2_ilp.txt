@@ -1,0 +1,505 @@
+============================================================
+HCVRP ILP Solver — Google OR-Tools
+============================================================
+Total scenarios to solve: 41
+Solver time limit per scenario: 60s
+
+Solving: COMPANY-1 | Depot Balikpapan | 2025-12-26
+    [DEBUG] n_awbs=38, total_weight=15271kg, total_volume=64.53cbm, vehicles_per_type=9, distance_matrix shape=(39, 39)
+    [DEBUG] Creating routing model: n_nodes=39, n_vehicles=36, distance_matrix size=39x39
+  AWBs           : 38
+  Vehicles used  : 5  {'CDD Box': 5}
+  Total distance : 1185.52 km
+  Total cost     : Rp 1,791,452
+  Avg weight util: 67.9%
+  Avg volume util: 86.0%
+  OR-Tools obj   : 218552
+  Runtime        : 60.79s
+
+Solving: COMPANY-1 | Depot Batam | 2025-12-18
+    [DEBUG] n_awbs=28, total_weight=3415kg, total_volume=23.19cbm, vehicles_per_type=3, distance_matrix shape=(29, 29)
+    [DEBUG] Creating routing model: n_nodes=29, n_vehicles=12, distance_matrix size=29x29
+  AWBs           : 28
+  Vehicles used  : 2  {'CDD Box': 2}
+  Total distance : 74.47 km
+  Total cost     : Rp 112,532
+  Avg weight util: 37.9%
+  Avg volume util: 77.3%
+  OR-Tools obj   : 47447
+  Runtime        : 60.4s
+
+Solving: COMPANY-1 | Depot Batam | 2025-12-24
+    [DEBUG] n_awbs=29, total_weight=406kg, total_volume=13.02cbm, vehicles_per_type=2, distance_matrix shape=(30, 30)
+    [DEBUG] Creating routing model: n_nodes=30, n_vehicles=8, distance_matrix size=30x30
+  AWBs           : 29
+  Vehicles used  : 1  {'CDD Box': 1}
+  Total distance : 57.15 km
+  Total cost     : Rp 86,360
+  Avg weight util: 9.0%
+  Avg volume util: 86.8%
+  OR-Tools obj   : 25715
+  Runtime        : 60.39s
+
+Solving: COMPANY-1 | Depot Makassar | 2025-12-19
+    [DEBUG] n_awbs=26, total_weight=9103kg, total_volume=27.96cbm, vehicles_per_type=4, distance_matrix shape=(27, 27)
+    [DEBUG] Creating routing model: n_nodes=27, n_vehicles=16, distance_matrix size=27x27
+  AWBs           : 26
+  Vehicles used  : 3  {'CDD Box': 3}
+  Total distance : 4147.21 km
+  Total cost     : Rp 6,266,895
+  Avg weight util: 67.4%
+  Avg volume util: 62.1%
+  OR-Tools obj   : 474721
+  Runtime        : 60.39s
+
+Solving: COMPANY-1 | Depot Makassar | 2025-12-23
+    [DEBUG] n_awbs=63, total_weight=32394kg, total_volume=103.54cbm, vehicles_per_type=13, distance_matrix shape=(64, 64)
+    [DEBUG] Creating routing model: n_nodes=64, n_vehicles=52, distance_matrix size=64x64
+  AWBs           : 63
+  Vehicles used  : 8  {'CDD Box': 8}
+  Total distance : 316.87 km
+  Total cost     : Rp 478,825
+  Avg weight util: 90.0%
+  Avg volume util: 86.3%
+  OR-Tools obj   : 191687
+  Runtime        : 60.46s
+
+Solving: COMPANY-1 | Depot Manado | 2025-12-18
+    [DEBUG] n_awbs=32, total_weight=1074kg, total_volume=14.47cbm, vehicles_per_type=2, distance_matrix shape=(33, 33)
+    [DEBUG] Creating routing model: n_nodes=33, n_vehicles=8, distance_matrix size=33x33
+  AWBs           : 32
+  Vehicles used  : 1  {'CDD Box': 1}
+  Total distance : 888.95 km
+  Total cost     : Rp 1,343,302
+  Avg weight util: 23.9%
+  Avg volume util: 96.5%
+  OR-Tools obj   : 108895
+  Runtime        : 60.4s
+
+Solving: COMPANY-1 | Depot Manado | 2025-12-24
+    [DEBUG] n_awbs=17, total_weight=893kg, total_volume=10.25cbm, vehicles_per_type=2, distance_matrix shape=(18, 18)
+    [DEBUG] Creating routing model: n_nodes=18, n_vehicles=8, distance_matrix size=18x18
+  AWBs           : 17
+  Vehicles used  : 1  {'CDD Box': 1}
+  Total distance : 127.27 km
+  Total cost     : Rp 192,319
+  Avg weight util: 19.8%
+  Avg volume util: 68.4%
+  OR-Tools obj   : 32727
+  Runtime        : 60.39s
+
+Solving: COMPANY-1 | Depot Medan | 2025-12-23
+    [DEBUG] n_awbs=83, total_weight=6899kg, total_volume=104.52cbm, vehicles_per_type=14, distance_matrix shape=(84, 84)
+    [DEBUG] Creating routing model: n_nodes=84, n_vehicles=56, distance_matrix size=84x84
+  AWBs           : 83
+  Vehicles used  : 8  {'Engkel (CDE)': 1, 'CDD Box': 7}
+  Total distance : 3189.6 km
+  Total cost     : Rp 4,810,984
+  Avg weight util: 21.2%
+  Avg volume util: 90.8%
+  OR-Tools obj   : 478960
+  Runtime        : 60.43s
+
+Solving: COMPANY-1 | Depot Medan | 2025-12-24
+    [DEBUG] n_awbs=25, total_weight=1594kg, total_volume=19.75cbm, vehicles_per_type=3, distance_matrix shape=(26, 26)
+    [DEBUG] Creating routing model: n_nodes=26, n_vehicles=12, distance_matrix size=26x26
+  AWBs           : 25
+  Vehicles used  : 2  {'Pickup Bak': 1, 'CDD Box': 1}
+  Total distance : 144.5 km
+  Total cost     : Rp 197,625
+  Avg weight util: 24.8%
+  Avg volume util: 98.2%
+  OR-Tools obj   : 54450
+  Runtime        : 60.41s
+
+Solving: COMPANY-1 | Depot Pekanbaru | 2025-12-08
+    [DEBUG] n_awbs=22, total_weight=2327kg, total_volume=8.88cbm, vehicles_per_type=2, distance_matrix shape=(23, 23)
+    [DEBUG] Creating routing model: n_nodes=23, n_vehicles=8, distance_matrix size=23x23
+  AWBs           : 22
+  Vehicles used  : 1  {'CDD Box': 1}
+  Total distance : 2458.05 km
+  Total cost     : Rp 3,714,387
+  Avg weight util: 51.7%
+  Avg volume util: 59.2%
+  OR-Tools obj   : 265805
+  Runtime        : 60.39s
+
+Solving: COMPANY-1 | Depot Pekanbaru | 2025-12-11
+    [DEBUG] n_awbs=28, total_weight=262kg, total_volume=9.52cbm, vehicles_per_type=2, distance_matrix shape=(29, 29)
+    [DEBUG] Creating routing model: n_nodes=29, n_vehicles=8, distance_matrix size=29x29
+  AWBs           : 28
+  Vehicles used  : 1  {'CDD Box': 1}
+  Total distance : 362.44 km
+  Total cost     : Rp 547,687
+  Avg weight util: 5.8%
+  Avg volume util: 63.5%
+  OR-Tools obj   : 56244
+  Runtime        : 60.4s
+
+Solving: COMPANY-1 | Depot Pekanbaru | 2025-12-18
+    [DEBUG] n_awbs=44, total_weight=1418kg, total_volume=11.12cbm, vehicles_per_type=2, distance_matrix shape=(45, 45)
+    [DEBUG] Creating routing model: n_nodes=45, n_vehicles=8, distance_matrix size=45x45
+  AWBs           : 44
+  Vehicles used  : 1  {'CDD Box': 1}
+  Total distance : 35.06 km
+  Total cost     : Rp 52,980
+  Avg weight util: 31.5%
+  Avg volume util: 74.1%
+  OR-Tools obj   : 23506
+  Runtime        : 60.41s
+
+Solving: COMPANY-1 | Depot Pekanbaru | 2025-12-23
+    [DEBUG] n_awbs=21, total_weight=626kg, total_volume=4.91cbm, vehicles_per_type=1, distance_matrix shape=(22, 22)
+    [DEBUG] Creating routing model: n_nodes=22, n_vehicles=4, distance_matrix size=22x22
+  AWBs           : 21
+  Vehicles used  : 1  {'CDD Box': 1}
+  Total distance : 333.84 km
+  Total cost     : Rp 504,469
+  Avg weight util: 13.9%
+  Avg volume util: 32.8%
+  OR-Tools obj   : 53384
+  Runtime        : 60.39s
+
+Solving: COMPANY-1 | Depot Pekanbaru | 2025-12-24
+    [DEBUG] n_awbs=27, total_weight=790kg, total_volume=4.59cbm, vehicles_per_type=1, distance_matrix shape=(28, 28)
+    [DEBUG] Creating routing model: n_nodes=28, n_vehicles=4, distance_matrix size=28x28
+  AWBs           : 27
+  Vehicles used  : 1  {'CDD Box': 1}
+  Total distance : 40.05 km
+  Total cost     : Rp 60,520
+  Avg weight util: 17.6%
+  Avg volume util: 30.6%
+  OR-Tools obj   : 24005
+  Runtime        : 60.41s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-07-02
+    [DEBUG] n_awbs=28, total_weight=11973kg, total_volume=32.15cbm, vehicles_per_type=5, distance_matrix shape=(29, 29)
+    [DEBUG] Creating routing model: n_nodes=29, n_vehicles=20, distance_matrix size=29x29
+  AWBs           : 28
+  Vehicles used  : 3  {'CDD Box': 3}
+  Total distance : 406.7 km
+  Total cost     : Rp 614,568
+  Avg weight util: 88.7%
+  Avg volume util: 71.4%
+  OR-Tools obj   : 100670
+  Runtime        : 60.4s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-07-11
+    [DEBUG] n_awbs=32, total_weight=11306kg, total_volume=119.55cbm, vehicles_per_type=15, distance_matrix shape=(33, 33)
+    [DEBUG] Creating routing model: n_nodes=33, n_vehicles=60, distance_matrix size=33x33
+  AWBs           : 32
+  Vehicles used  : 9  {'Engkel (CDE)': 1, 'CDD Box': 8}
+  Total distance : 789.04 km
+  Total cost     : Rp 1,189,705
+  Avg weight util: 28.9%
+  Avg volume util: 90.5%
+  OR-Tools obj   : 258904
+  Runtime        : 60.41s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-07-21
+    [DEBUG] n_awbs=33, total_weight=11498kg, total_volume=27.73cbm, vehicles_per_type=4, distance_matrix shape=(34, 34)
+    [DEBUG] Creating routing model: n_nodes=34, n_vehicles=16, distance_matrix size=34x34
+  AWBs           : 33
+  Vehicles used  : 3  {'CDD Box': 3}
+  Total distance : 467.57 km
+  Total cost     : Rp 706,550
+  Avg weight util: 85.2%
+  Avg volume util: 61.6%
+  OR-Tools obj   : 106757
+  Runtime        : 60.41s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-07-30
+    [DEBUG] n_awbs=29, total_weight=23020kg, total_volume=82.13cbm, vehicles_per_type=11, distance_matrix shape=(30, 30)
+    [DEBUG] Creating routing model: n_nodes=30, n_vehicles=44, distance_matrix size=30x30
+  AWBs           : 29
+  Vehicles used  : 6  {'CDD Box': 6}
+  Total distance : 579.41 km
+  Total cost     : Rp 875,553
+  Avg weight util: 85.3%
+  Avg volume util: 91.3%
+  OR-Tools obj   : 177941
+  Runtime        : 60.4s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-08-01
+    [DEBUG] n_awbs=34, total_weight=10334kg, total_volume=26.11cbm, vehicles_per_type=4, distance_matrix shape=(35, 35)
+    [DEBUG] Creating routing model: n_nodes=35, n_vehicles=16, distance_matrix size=35x35
+  AWBs           : 34
+  Vehicles used  : 3  {'Engkel (CDE)': 1, 'CDD Box': 2}
+  Total distance : 434.62 km
+  Total cost     : Rp 624,704
+  Avg weight util: 89.0%
+  Avg volume util: 64.5%
+  OR-Tools obj   : 103462
+  Runtime        : 60.4s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-08-11
+    [DEBUG] n_awbs=36, total_weight=16356kg, total_volume=37.40cbm, vehicles_per_type=5, distance_matrix shape=(37, 37)
+    [DEBUG] Creating routing model: n_nodes=37, n_vehicles=20, distance_matrix size=37x37
+  AWBs           : 36
+  Vehicles used  : 4  {'CDD Box': 4}
+  Total distance : 541.89 km
+  Total cost     : Rp 818,855
+  Avg weight util: 90.9%
+  Avg volume util: 62.3%
+  OR-Tools obj   : 134189
+  Runtime        : 60.42s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-08-20
+    [DEBUG] n_awbs=30, total_weight=23093kg, total_volume=82.41cbm, vehicles_per_type=11, distance_matrix shape=(31, 31)
+    [DEBUG] Creating routing model: n_nodes=31, n_vehicles=44, distance_matrix size=31x31
+  AWBs           : 30
+  Vehicles used  : 6  {'CDD Box': 6}
+  Total distance : 581.58 km
+  Total cost     : Rp 878,832
+  Avg weight util: 85.5%
+  Avg volume util: 91.6%
+  OR-Tools obj   : 178158
+  Runtime        : 60.4s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-08-29
+    [DEBUG] n_awbs=35, total_weight=10402kg, total_volume=26.47cbm, vehicles_per_type=4, distance_matrix shape=(36, 36)
+    [DEBUG] Creating routing model: n_nodes=36, n_vehicles=16, distance_matrix size=36x36
+  AWBs           : 35
+  Vehicles used  : 3  {'Engkel (CDE)': 1, 'CDD Box': 2}
+  Total distance : 430.58 km
+  Total cost     : Rp 618,600
+  Avg weight util: 89.5%
+  Avg volume util: 65.2%
+  OR-Tools obj   : 103058
+  Runtime        : 60.41s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-09-01
+    [DEBUG] n_awbs=40, total_weight=14050kg, total_volume=38.85cbm, vehicles_per_type=5, distance_matrix shape=(41, 41)
+    [DEBUG] Creating routing model: n_nodes=41, n_vehicles=20, distance_matrix size=41x41
+  AWBs           : 40
+  Vehicles used  : 4  {'Engkel (CDE)': 1, 'CDD Box': 3}
+  Total distance : 516.84 km
+  Total cost     : Rp 775,733
+  Avg weight util: 83.2%
+  Avg volume util: 67.4%
+  OR-Tools obj   : 131684
+  Runtime        : 60.4s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-09-11
+    [DEBUG] n_awbs=30, total_weight=26187kg, total_volume=99.05cbm, vehicles_per_type=13, distance_matrix shape=(31, 31)
+    [DEBUG] Creating routing model: n_nodes=31, n_vehicles=52, distance_matrix size=31x31
+  AWBs           : 30
+  Vehicles used  : 7  {'CDD Box': 7}
+  Total distance : 576.38 km
+  Total cost     : Rp 870,975
+  Avg weight util: 83.1%
+  Avg volume util: 94.3%
+  OR-Tools obj   : 197638
+  Runtime        : 60.4s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-09-20
+    [DEBUG] n_awbs=35, total_weight=25722kg, total_volume=93.68cbm, vehicles_per_type=12, distance_matrix shape=(36, 36)
+    [DEBUG] Creating routing model: n_nodes=36, n_vehicles=48, distance_matrix size=36x36
+  AWBs           : 35
+  Vehicles used  : 7  {'CDD Box': 7}
+  Total distance : 593.08 km
+  Total cost     : Rp 896,209
+  Avg weight util: 81.7%
+  Avg volume util: 89.2%
+  OR-Tools obj   : 199308
+  Runtime        : 60.41s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-09-29
+    [DEBUG] n_awbs=35, total_weight=9451kg, total_volume=28.46cbm, vehicles_per_type=4, distance_matrix shape=(36, 36)
+    [DEBUG] Creating routing model: n_nodes=36, n_vehicles=16, distance_matrix size=36x36
+  AWBs           : 35
+  Vehicles used  : 3  {'Engkel (CDE)': 1, 'CDD Box': 2}
+  Total distance : 427.82 km
+  Total cost     : Rp 641,213
+  Avg weight util: 74.5%
+  Avg volume util: 66.0%
+  OR-Tools obj   : 102782
+  Runtime        : 60.4s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-10-01
+    [DEBUG] n_awbs=35, total_weight=41616kg, total_volume=155.84cbm, vehicles_per_type=20, distance_matrix shape=(36, 36)
+    [DEBUG] Creating routing model: n_nodes=36, n_vehicles=80, distance_matrix size=36x36
+  AWBs           : 35
+  Vehicles used  : 11  {'CDD Box': 11}
+  Total distance : 947.69 km
+  Total cost     : Rp 1,432,066
+  Avg weight util: 84.1%
+  Avg volume util: 94.4%
+  OR-Tools obj   : 314769
+  Runtime        : 60.55s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-10-10
+    [DEBUG] n_awbs=36, total_weight=32581kg, total_volume=125.31cbm, vehicles_per_type=16, distance_matrix shape=(37, 37)
+    [DEBUG] Creating routing model: n_nodes=37, n_vehicles=64, distance_matrix size=37x37
+  AWBs           : 36
+  Vehicles used  : 9  {'CDD Box': 9}
+  Total distance : 829.33 km
+  Total cost     : Rp 1,253,210
+  Avg weight util: 80.5%
+  Avg volume util: 92.8%
+  OR-Tools obj   : 262933
+  Runtime        : 60.42s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-10-20
+    [DEBUG] n_awbs=35, total_weight=15865kg, total_volume=43.84cbm, vehicles_per_type=6, distance_matrix shape=(36, 36)
+    [DEBUG] Creating routing model: n_nodes=36, n_vehicles=24, distance_matrix size=36x36
+  AWBs           : 35
+  Vehicles used  : 4  {'CDD Box': 4}
+  Total distance : 510.1 km
+  Total cost     : Rp 770,818
+  Avg weight util: 88.1%
+  Avg volume util: 73.1%
+  OR-Tools obj   : 131010
+  Runtime        : 60.41s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-10-30
+    [DEBUG] n_awbs=31, total_weight=23344kg, total_volume=88.57cbm, vehicles_per_type=12, distance_matrix shape=(32, 32)
+    [DEBUG] Creating routing model: n_nodes=32, n_vehicles=48, distance_matrix size=32x32
+  AWBs           : 31
+  Vehicles used  : 6  {'CDD Box': 6}
+  Total distance : 533.34 km
+  Total cost     : Rp 805,936
+  Avg weight util: 86.5%
+  Avg volume util: 98.4%
+  OR-Tools obj   : 173334
+  Runtime        : 60.4s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-11-01
+    [DEBUG] n_awbs=46, total_weight=33734kg, total_volume=125.40cbm, vehicles_per_type=16, distance_matrix shape=(47, 47)
+    [DEBUG] Creating routing model: n_nodes=47, n_vehicles=64, distance_matrix size=47x47
+  AWBs           : 46
+  Vehicles used  : 9  {'CDD Box': 9}
+  Total distance : 777.13 km
+  Total cost     : Rp 1,174,329
+  Avg weight util: 83.3%
+  Avg volume util: 92.9%
+  OR-Tools obj   : 257713
+  Runtime        : 60.46s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-11-11
+    [DEBUG] n_awbs=32, total_weight=32237kg, total_volume=243.65cbm, vehicles_per_type=30, distance_matrix shape=(33, 33)
+    [DEBUG] Creating routing model: n_nodes=33, n_vehicles=120, distance_matrix size=33x33
+  NO SOLUTION found within 60s — skipping.
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-11-20
+    [DEBUG] n_awbs=29, total_weight=7303kg, total_volume=76.87cbm, vehicles_per_type=10, distance_matrix shape=(30, 30)
+    [DEBUG] Creating routing model: n_nodes=30, n_vehicles=40, distance_matrix size=30x30
+  AWBs           : 29
+  Vehicles used  : 6  {'Pickup Bak': 1, 'CDD Box': 5}
+  Total distance : 470.76 km
+  Total cost     : Rp 698,480
+  Avg weight util: 28.4%
+  Avg volume util: 92.9%
+  OR-Tools obj   : 167076
+  Runtime        : 60.4s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-11-28
+    [DEBUG] n_awbs=36, total_weight=26241kg, total_volume=93.14cbm, vehicles_per_type=12, distance_matrix shape=(37, 37)
+    [DEBUG] Creating routing model: n_nodes=37, n_vehicles=48, distance_matrix size=37x37
+  AWBs           : 36
+  Vehicles used  : 7  {'CDD Box': 7}
+  Total distance : 705.77 km
+  Total cost     : Rp 1,066,496
+  Avg weight util: 83.3%
+  Avg volume util: 88.7%
+  OR-Tools obj   : 210577
+  Runtime        : 60.41s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-12-10
+    [DEBUG] n_awbs=30, total_weight=21470kg, total_volume=146.04cbm, vehicles_per_type=19, distance_matrix shape=(31, 31)
+    [DEBUG] Creating routing model: n_nodes=31, n_vehicles=76, distance_matrix size=31x31
+  AWBs           : 30
+  Vehicles used  : 10  {'CDD Box': 10}
+  Total distance : 954.0 km
+  Total cost     : Rp 1,441,603
+  Avg weight util: 47.7%
+  Avg volume util: 97.4%
+  OR-Tools obj   : 295400
+  Runtime        : 60.4s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-12-11
+    [DEBUG] n_awbs=33, total_weight=19180kg, total_volume=76.99cbm, vehicles_per_type=10, distance_matrix shape=(34, 34)
+    [DEBUG] Creating routing model: n_nodes=34, n_vehicles=40, distance_matrix size=34x34
+  AWBs           : 33
+  Vehicles used  : 6  {'Pickup Bak': 1, 'CDD Box': 5}
+  Total distance : 506.34 km
+  Total cost     : Rp 752,244
+  Avg weight util: 77.6%
+  Avg volume util: 94.5%
+  OR-Tools obj   : 170634
+  Runtime        : 60.41s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-12-16
+    [DEBUG] n_awbs=36, total_weight=29739kg, total_volume=225.00cbm, vehicles_per_type=29, distance_matrix shape=(37, 37)
+    [DEBUG] Creating routing model: n_nodes=37, n_vehicles=116, distance_matrix size=37x37
+  AWBs           : 36
+  Vehicles used  : 16  {'CDD Box': 16}
+  Total distance : 1137.54 km
+  Total cost     : Rp 1,718,951
+  Avg weight util: 41.3%
+  Avg volume util: 93.8%
+  OR-Tools obj   : 433754
+  Runtime        : 60.42s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2025-12-25
+    [DEBUG] n_awbs=31, total_weight=22628kg, total_volume=88.00cbm, vehicles_per_type=11, distance_matrix shape=(32, 32)
+    [DEBUG] Creating routing model: n_nodes=32, n_vehicles=44, distance_matrix size=32x32
+  AWBs           : 31
+  Vehicles used  : 6  {'CDD Box': 6}
+  Total distance : 557.83 km
+  Total cost     : Rp 842,943
+  Avg weight util: 83.8%
+  Avg volume util: 97.8%
+  OR-Tools obj   : 175783
+  Runtime        : 60.41s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2026-01-01
+    [DEBUG] n_awbs=31, total_weight=23421kg, total_volume=89.02cbm, vehicles_per_type=12, distance_matrix shape=(32, 32)
+    [DEBUG] Creating routing model: n_nodes=32, n_vehicles=48, distance_matrix size=32x32
+  AWBs           : 31
+  Vehicles used  : 6  {'CDD Box': 6}
+  Total distance : 589.44 km
+  Total cost     : Rp 890,710
+  Avg weight util: 86.8%
+  Avg volume util: 98.9%
+  OR-Tools obj   : 178944
+  Runtime        : 60.41s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2026-01-02
+    [DEBUG] n_awbs=34, total_weight=15442kg, total_volume=66.00cbm, vehicles_per_type=9, distance_matrix shape=(35, 35)
+    [DEBUG] Creating routing model: n_nodes=35, n_vehicles=36, distance_matrix size=35x35
+  AWBs           : 34
+  Vehicles used  : 5  {'CDD Box': 5}
+  Total distance : 569.1 km
+  Total cost     : Rp 859,974
+  Avg weight util: 68.6%
+  Avg volume util: 88.0%
+  OR-Tools obj   : 156910
+  Runtime        : 60.41s
+
+Solving: COMPANY-2 | Depot Jatiasih | 2026-01-03
+    [DEBUG] n_awbs=34, total_weight=15161kg, total_volume=75.00cbm, vehicles_per_type=10, distance_matrix shape=(35, 35)
+    [DEBUG] Creating routing model: n_nodes=35, n_vehicles=40, distance_matrix size=35x35
+  AWBs           : 34
+  Vehicles used  : 5  {'CDD Box': 5}
+  Total distance : 519.44 km
+  Total cost     : Rp 784,932
+  Avg weight util: 67.4%
+  Avg volume util: 100.0%
+  OR-Tools obj   : 151944
+  Runtime        : 60.41s
+
+============================================================
+AGGREGATE RESULTS
+============================================================
+Scenarios attempted    : 41
+Scenarios solved       : 40
+Avg AWBs per scenario  : 33.9
+Avg vehicles used      : 5.00
+Avg total distance km  : 732.86
+Avg total cost Rp      : 1,104,113
+Avg weight utilisation : 61.4%
+Avg volume utilisation : 80.8%
+Avg runtime per scenario: 60.42s
+
+Results saved → results_ilp.csv

@@ -1,0 +1,42 @@
+source,depot,date,awb_count,status,vehicles_used,vehicle_breakdown,total_distance_km,total_cost_rp,avg_weight_util_pct,avg_volume_util_pct,ortools_objective,runtime_sec,distance_method
+COMPANY-1,Depot Balikpapan,2025-12-26,38,solved,5.0,{'CDD Box': 5},1185.52,1791452.0,67.9,86.0,218552.0,60.79,OSRM
+COMPANY-1,Depot Batam,2025-12-18,28,solved,2.0,{'CDD Box': 2},74.47,112532.0,37.9,77.3,47447.0,60.4,OSRM
+COMPANY-1,Depot Batam,2025-12-24,29,solved,1.0,{'CDD Box': 1},57.15,86360.0,9.0,86.8,25715.0,60.39,OSRM
+COMPANY-1,Depot Makassar,2025-12-19,26,solved,3.0,{'CDD Box': 3},4147.21,6266895.0,67.4,62.1,474721.0,60.39,OSRM
+COMPANY-1,Depot Makassar,2025-12-23,63,solved,8.0,{'CDD Box': 8},316.87,478825.0,90.0,86.3,191687.0,60.46,OSRM
+COMPANY-1,Depot Manado,2025-12-18,32,solved,1.0,{'CDD Box': 1},888.95,1343302.0,23.9,96.5,108895.0,60.4,OSRM
+COMPANY-1,Depot Manado,2025-12-24,17,solved,1.0,{'CDD Box': 1},127.27,192319.0,19.8,68.4,32727.0,60.39,OSRM
+COMPANY-1,Depot Medan,2025-12-23,83,solved,8.0,"{'Engkel (CDE)': 1, 'CDD Box': 7}",3189.6,4810984.0,21.2,90.8,478960.0,60.43,OSRM
+COMPANY-1,Depot Medan,2025-12-24,25,solved,2.0,"{'Pickup Bak': 1, 'CDD Box': 1}",144.5,197625.0,24.8,98.2,54450.0,60.41,OSRM
+COMPANY-1,Depot Pekanbaru,2025-12-08,22,solved,1.0,{'CDD Box': 1},2458.05,3714387.0,51.7,59.2,265805.0,60.39,OSRM
+COMPANY-1,Depot Pekanbaru,2025-12-11,28,solved,1.0,{'CDD Box': 1},362.44,547687.0,5.8,63.5,56244.0,60.4,OSRM
+COMPANY-1,Depot Pekanbaru,2025-12-18,44,solved,1.0,{'CDD Box': 1},35.06,52980.0,31.5,74.1,23506.0,60.41,OSRM
+COMPANY-1,Depot Pekanbaru,2025-12-23,21,solved,1.0,{'CDD Box': 1},333.84,504469.0,13.9,32.8,53384.0,60.39,OSRM
+COMPANY-1,Depot Pekanbaru,2025-12-24,27,solved,1.0,{'CDD Box': 1},40.05,60520.0,17.6,30.6,24005.0,60.41,OSRM
+COMPANY-2,Depot Jatiasih,2025-07-02,28,solved,3.0,{'CDD Box': 3},406.7,614568.0,88.7,71.4,100670.0,60.4,OSRM
+COMPANY-2,Depot Jatiasih,2025-07-11,32,solved,9.0,"{'Engkel (CDE)': 1, 'CDD Box': 8}",789.04,1189705.0,28.9,90.5,258904.0,60.41,OSRM
+COMPANY-2,Depot Jatiasih,2025-07-21,33,solved,3.0,{'CDD Box': 3},467.57,706550.0,85.2,61.6,106757.0,60.41,OSRM
+COMPANY-2,Depot Jatiasih,2025-07-30,29,solved,6.0,{'CDD Box': 6},579.41,875553.0,85.3,91.3,177941.0,60.4,OSRM
+COMPANY-2,Depot Jatiasih,2025-08-01,34,solved,3.0,"{'Engkel (CDE)': 1, 'CDD Box': 2}",434.62,624704.0,89.0,64.5,103462.0,60.4,OSRM
+COMPANY-2,Depot Jatiasih,2025-08-11,36,solved,4.0,{'CDD Box': 4},541.89,818855.0,90.9,62.3,134189.0,60.42,OSRM
+COMPANY-2,Depot Jatiasih,2025-08-20,30,solved,6.0,{'CDD Box': 6},581.58,878832.0,85.5,91.6,178158.0,60.4,OSRM
+COMPANY-2,Depot Jatiasih,2025-08-29,35,solved,3.0,"{'Engkel (CDE)': 1, 'CDD Box': 2}",430.58,618600.0,89.5,65.2,103058.0,60.41,OSRM
+COMPANY-2,Depot Jatiasih,2025-09-01,40,solved,4.0,"{'Engkel (CDE)': 1, 'CDD Box': 3}",516.84,775733.0,83.2,67.4,131684.0,60.4,OSRM
+COMPANY-2,Depot Jatiasih,2025-09-11,30,solved,7.0,{'CDD Box': 7},576.38,870975.0,83.1,94.3,197638.0,60.4,OSRM
+COMPANY-2,Depot Jatiasih,2025-09-20,35,solved,7.0,{'CDD Box': 7},593.08,896209.0,81.7,89.2,199308.0,60.41,OSRM
+COMPANY-2,Depot Jatiasih,2025-09-29,35,solved,3.0,"{'Engkel (CDE)': 1, 'CDD Box': 2}",427.82,641213.0,74.5,66.0,102782.0,60.4,OSRM
+COMPANY-2,Depot Jatiasih,2025-10-01,35,solved,11.0,{'CDD Box': 11},947.69,1432066.0,84.1,94.4,314769.0,60.55,OSRM
+COMPANY-2,Depot Jatiasih,2025-10-10,36,solved,9.0,{'CDD Box': 9},829.33,1253210.0,80.5,92.8,262933.0,60.42,OSRM
+COMPANY-2,Depot Jatiasih,2025-10-20,35,solved,4.0,{'CDD Box': 4},510.1,770818.0,88.1,73.1,131010.0,60.41,OSRM
+COMPANY-2,Depot Jatiasih,2025-10-30,31,solved,6.0,{'CDD Box': 6},533.34,805936.0,86.5,98.4,173334.0,60.4,OSRM
+COMPANY-2,Depot Jatiasih,2025-11-01,46,solved,9.0,{'CDD Box': 9},777.13,1174329.0,83.3,92.9,257713.0,60.46,OSRM
+COMPANY-2,Depot Jatiasih,2025-11-11,32,no_solution,,,,,,,,0.41,
+COMPANY-2,Depot Jatiasih,2025-11-20,29,solved,6.0,"{'Pickup Bak': 1, 'CDD Box': 5}",470.76,698480.0,28.4,92.9,167076.0,60.4,OSRM
+COMPANY-2,Depot Jatiasih,2025-11-28,36,solved,7.0,{'CDD Box': 7},705.77,1066496.0,83.3,88.7,210577.0,60.41,OSRM
+COMPANY-2,Depot Jatiasih,2025-12-10,30,solved,10.0,{'CDD Box': 10},954.0,1441603.0,47.7,97.4,295400.0,60.4,OSRM
+COMPANY-2,Depot Jatiasih,2025-12-11,33,solved,6.0,"{'Pickup Bak': 1, 'CDD Box': 5}",506.34,752244.0,77.6,94.5,170634.0,60.41,OSRM
+COMPANY-2,Depot Jatiasih,2025-12-16,36,solved,16.0,{'CDD Box': 16},1137.54,1718951.0,41.3,93.8,433754.0,60.42,OSRM
+COMPANY-2,Depot Jatiasih,2025-12-25,31,solved,6.0,{'CDD Box': 6},557.83,842943.0,83.8,97.8,175783.0,60.41,OSRM
+COMPANY-2,Depot Jatiasih,2026-01-01,31,solved,6.0,{'CDD Box': 6},589.44,890710.0,86.8,98.9,178944.0,60.41,OSRM
+COMPANY-2,Depot Jatiasih,2026-01-02,34,solved,5.0,{'CDD Box': 5},569.1,859974.0,68.6,88.0,156910.0,60.41,OSRM
+COMPANY-2,Depot Jatiasih,2026-01-03,34,solved,5.0,{'CDD Box': 5},519.44,784932.0,67.4,100.0,151944.0,60.41,OSRM

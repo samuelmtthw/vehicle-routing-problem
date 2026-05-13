@@ -185,17 +185,60 @@ def build_ortools_data(awbs, dist_matrix_km):
       (enforced by the fixed cost on each vehicle).
     """
     n_awbs = len(awbs)
+    
+    # Validate distance matrix dimensions
+    if len(dist_matrix_km) != n_awbs + 1 or len(dist_matrix_km[0]) != n_awbs + 1:
+        raise ValueError(
+            f"Distance matrix shape mismatch. Expected ({n_awbs + 1}, {n_awbs + 1}), "
+            f"got ({len(dist_matrix_km)}, {len(dist_matrix_km[0])})"
+        )
 
     # ── Distance matrix scaled to integers ──────────────────
     # OR-Tools requires integer arc costs.
     # We multiply km by DIST_SCALE to preserve precision.
+    
+    # Validate distance matrix before scaling
+    if np.any(np.isnan(dist_matrix_km)) or np.any(np.isinf(dist_matrix_km)):
+        raise ValueError("Distance matrix contains NaN or Inf values")
+    
     dist_int = (dist_matrix_km * DIST_SCALE).astype(int).tolist()
+    
+    # Validate scaled distances
+    for i, row in enumerate(dist_int):
+        for j, val in enumerate(row):
+            if val < 0:
+                print(f"    [WARNING] Negative distance at [{i}][{j}]: {val}")
+            if val > 2**31 - 1:  # Max int32
+                print(f"    [WARNING] Distance at [{i}][{j}] exceeds int32: {val}")
 
     # ── Determine vehicle fleet ──────────────────────────────
     # Provide enough vehicles of each type so the problem is always feasible.
-    # Upper bound: one vehicle per AWB (worst case).
-    # We distribute evenly across fleet types.
-    vehicles_per_type = max(1, math.ceil(n_awbs / len(FLEET)))
+    # Key change: Use a smarter heuristic that considers:
+    # 1. Total demand (sum of weights and volumes)
+    # 2. Vehicle capacities
+    # 3. Safety margin for practical feasibility
+    # 4. Cap to avoid OR-Tools overflow issues
+    
+    total_weight = awbs["weight"].sum()
+    total_volume = awbs["volume"].sum()
+    
+    # Calculate minimum vehicles needed per type based on capacity
+    min_vehicles_per_type = 1
+    for vtype in FLEET:
+        weight_needed = math.ceil(total_weight / vtype["max_weight"])
+        volume_needed = math.ceil(total_volume / vtype["max_volume"])
+        min_needed = max(weight_needed, volume_needed)
+        min_vehicles_per_type = max(min_vehicles_per_type, math.ceil(min_needed / len(FLEET)))
+    
+    # Cap at a reasonable maximum to prevent OR-Tools issues
+    # OR-Tools struggles with >30 vehicles per type in practice
+    MAX_VEHICLES_PER_TYPE = 30
+    vehicles_per_type = min(MAX_VEHICLES_PER_TYPE, max(min_vehicles_per_type, 1))
+    
+    print(f"    [DEBUG] n_awbs={n_awbs}, total_weight={total_weight:.0f}kg, "
+          f"total_volume={total_volume:.2f}cbm, vehicles_per_type={vehicles_per_type}, "
+          f"distance_matrix shape=({len(dist_matrix_km)}, {len(dist_matrix_km[0])})")
+    
     vehicle_types = []
     for vtype in FLEET:
         for _ in range(vehicles_per_type):
@@ -239,6 +282,23 @@ def solve_with_ortools(data, awbs, time_limit_sec=SOLVER_TIME_LIMIT_SEC):
     n_nodes    = data["n_nodes"]
     n_vehicles = data["n_vehicles"]
     depot      = data["depot"]
+    
+    # Validate data consistency before creating routing model
+    print(f"    [DEBUG] Creating routing model: n_nodes={n_nodes}, n_vehicles={n_vehicles}, "
+          f"distance_matrix size={len(data['distance_matrix'])}x{len(data['distance_matrix'][0])}")
+    
+    if len(data["distance_matrix"]) != n_nodes:
+        raise ValueError(f"Distance matrix rows ({len(data['distance_matrix'])}) != n_nodes ({n_nodes})")
+    if len(data["distance_matrix"][0]) != n_nodes:
+        raise ValueError(f"Distance matrix cols ({len(data['distance_matrix'][0])}) != n_nodes ({n_nodes})")
+    if len(data["weight_demands"]) != n_nodes:
+        raise ValueError(f"Weight demands ({len(data['weight_demands'])}) != n_nodes ({n_nodes})")
+    if len(data["volume_demands"]) != n_nodes:
+        raise ValueError(f"Volume demands ({len(data['volume_demands'])}) != n_nodes ({n_nodes})")
+    if len(data["weight_capacities"]) != n_vehicles:
+        raise ValueError(f"Weight capacities ({len(data['weight_capacities'])}) != n_vehicles ({n_vehicles})")
+    if len(data["volume_capacities"]) != n_vehicles:
+        raise ValueError(f"Volume capacities ({len(data['volume_capacities'])}) != n_vehicles ({n_vehicles})")
 
     # ── Create routing index manager ────────────────────────
     manager = pywrapcp.RoutingIndexManager(n_nodes, n_vehicles, depot)
@@ -309,7 +369,17 @@ def solve_with_ortools(data, awbs, time_limit_sec=SOLVER_TIME_LIMIT_SEC):
     search_params.log_search = False
 
     # ── Solve ────────────────────────────────────────────────
-    solution = routing.SolveWithParameters(search_params)
+    try:
+        solution = routing.SolveWithParameters(search_params)
+    except OverflowError as e:
+        print(f"    [ERROR] OverflowError during solve: {e}")
+        print(f"    [DEBUG] This often happens with very large fleets.")
+        print(f"    [DEBUG] Current: n_nodes={n_nodes}, n_vehicles={n_vehicles}")
+        return None
+    except SystemError as e:
+        print(f"    [ERROR] SystemError during solve: {e}")
+        print(f"    [DEBUG] Current: n_nodes={n_nodes}, n_vehicles={n_vehicles}")
+        return None
 
     if solution is None:
         return None
