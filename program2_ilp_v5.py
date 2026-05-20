@@ -259,7 +259,7 @@ def solve_scenario(scenario_id, depot, delivery_nodes):
         routing_enums_pb2.LocalSearchMetaheuristic.GUIDED_LOCAL_SEARCH
     )
     # 60s time limit per scenario — matches v1; GLS requires a bound to terminate
-    search_params.time_limit.FromSeconds(60)
+    search_params.time_limit.FromSeconds(30)
     search_params.log_search = False
 
     # ── Solve ─────────────────────────────────────────────────────────────────
