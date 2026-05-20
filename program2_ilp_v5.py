@@ -29,7 +29,7 @@ Fuel prices (Pertamina, May 2026):
 Distance       : OSRM road distances (Haversine fallback if OSRM unreachable)
 First solution : PATH_CHEAPEST_ARC
 Metaheuristic  : GUIDED_LOCAL_SEARCH
-Time limit     : 60 seconds per scenario
+Time limit     : 30 seconds per scenario
 """
 
 import math
@@ -174,7 +174,7 @@ def solve_scenario(scenario_id, depot, delivery_nodes):
 
     Distance: OSRM road distances with Haversine fallback.
     First solution: PATH_CHEAPEST_ARC.
-    Time limit: 60 seconds (matches v1; GLS requires a bound to terminate).
+    Time limit: 30 seconds (matches v1; GLS requires a bound to terminate).
 
     Returns result dict or None if infeasible.
     """
@@ -258,7 +258,7 @@ def solve_scenario(scenario_id, depot, delivery_nodes):
     search_params.local_search_metaheuristic = (
         routing_enums_pb2.LocalSearchMetaheuristic.GUIDED_LOCAL_SEARCH
     )
-    # 60s time limit per scenario — matches v1; GLS requires a bound to terminate
+    # 30s time limit per scenario — matches v1; GLS requires a bound to terminate
     search_params.time_limit.FromSeconds(30)
     search_params.log_search = False
 
