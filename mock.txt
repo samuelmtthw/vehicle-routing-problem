@@ -1,0 +1,299 @@
+MOCK THESIS DEFENSE — HCVRP ILP
+S2 Teknik Informatika · BINUS University
+Total: 70 Questions (20 original + 50 expanded)
+================================================
+
+
+================================================
+CATEGORY: CONCEPTUAL
+================================================
+
+Q: What is HCVRP and how does the '2D' in your thesis title distinguish it from standard CVRP?
+A: Define CVRP first (single depot, multiple routes, capacity constraint). Then explain heterogeneous fleet (different vehicle types with different capacities and costs). The '2D' means two simultaneous capacity dimensions: weight (kg) AND volume (CBM). Standard CVRP uses only one. Emphasize that ignoring volume in Indonesian last-mile logistics leads to physically infeasible solutions because a vehicle can be under weight capacity but over volume capacity.
+
+Q: Why did you choose Integer Linear Programming over a metaheuristic approach like Genetic Algorithm or Tabu Search for this problem?
+A: ILP guarantees global optimality for the instance size (n=3..22 nodes per scenario). Metaheuristics approximate — they don't guarantee the best answer. Your scenarios have small n (daily depot operations typically 5–30 nodes), which is within ILP's practical range. ILP results are reproducible and transparent — important for logistics decision-making. Mention that you still implemented a heuristic baseline for comparison.
+
+Q: What is the Miller-Tucker-Zemlin (MTZ) formulation and why is it necessary in your model?
+A: MTZ adds auxiliary continuous variables u_ikl (visit order/position) to enforce subtour elimination. Without it, the solver could produce disconnected loops that never touch the depot — physically invalid routes. The constraint is: u_ikl - u_jkl + n·x_ijkl ≤ n-1. When x_ijkl=1 (vehicle travels i→j), it forces u_j > u_i, creating a strict ordering. A cycle like A→B→A would require u_A < u_B AND u_B < u_A simultaneously, which is impossible. Weakness: MTZ produces a weaker LP relaxation than DFJ cuts, but is tractable for your n.
+
+Q: What is the role of the y_kl variable and Constraint C3b in your model? Why is it not enough to just use x_ijkl?
+A: y_kl ∈ {0,1} is the vehicle activation indicator — equals 1 if vehicle unit k of type l is used. C3b: Σ x_0jkl ≤ y_kl links activation to departure. If a vehicle departs the depot (Σ x_0j = 1), then y_kl must be 1, triggering the fixed cost f_l in the objective. Without y_kl, you couldn't charge fixed activation costs because the objective needs a binary variable to switch the fixed cost on/off. x_ijkl represents routing decisions (which arc is used); y_kl represents whether the vehicle is activated at all.
+
+Q: How did you compute the distance matrix? What is OSRM and why use it instead of Haversine (straight-line) distance?
+A: OSRM (Open Source Routing Machine) provides actual road distances via road network graph — accounts for roads, highways, turns, one-way streets. Haversine gives great-circle (straight-line) distances which underestimate real travel distances significantly in urban areas. Road distances are more realistic for fuel cost computation. In your code, OSRM is queried via the public API (router.project-osrm.org) with a fallback to Haversine if OSRM is unreachable. The distance matrix is asymmetric (d_ij ≠ d_ji) because road networks are directed.
+
+Q: Define HCVRP in one sentence. What makes it "heterogeneous" and what makes it "capacitated"?
+A: Heterogeneous = different vehicle types with different capacities and costs (4 types in your fleet). Capacitated = each vehicle has a hard upper limit on what it can carry. Your twist: two-dimensional capacity — both weight (kg) AND volume (CBM) must be respected simultaneously. Standard CVRP uses only one dimension. This 2D formulation is your thesis's key contribution over prior work.
+
+Q: What is the difference between VRP, CVRP, VRPTW, and HCVRP? Where does your thesis sit?
+A: VRP: basic routing from depot to customers. CVRP: adds capacity constraints (single dimension). VRPTW: adds time window constraints — deliveries must happen within customer-specified time slots. HCVRP: heterogeneous fleet — multiple vehicle types with different specs. Your thesis: HCVRP + 2D capacity (weight + volume). No time windows. Single depot per scenario.
+
+Q: Why is VRP NP-hard? What does that mean practically for your choice to use ILP?
+A: VRP is NP-hard because the number of possible route combinations grows factorially with n. For n delivery nodes, there are roughly n! possible orderings. ILP is still exact but computationally expensive for large n. Your justification for ILP: your scenarios have n=8–10, which is small enough for exact methods to solve in seconds. NP-hardness matters at scale (n>30), not at your instance size.
+
+Q: What is the significance of the "2D" in your thesis title? Why isn't weight alone sufficient for Indonesian last-mile logistics?
+A: Consumer goods (e-commerce, FMCG) tend to be bulky and lightweight — foam packaging, clothing, electronics. A vehicle may have weight capacity remaining but no physical space left. Your data confirms this: average volume utilization is 89.62% vs 32.30% for weight. A 1D weight-only model would assign more parcels per vehicle than physically fit, producing infeasible routes in the field.
+
+Q: Explain the difference between an exact method and a metaheuristic. Why does this distinction matter for your thesis?
+A: Exact methods (Branch-and-Bound, ILP) explore the full solution space and guarantee the globally optimal answer. Metaheuristics (Genetic Algorithm, Tabu Search, GLS) use guided search to find good solutions quickly but cannot prove optimality. Your thesis uses OR-Tools with GLS — technically a metaheuristic improvement over an initial exact construction. This means you cannot claim mathematical optimality guarantee, only best-solution-found convergence evidence.
+
+Q: What is the difference between feasibility and optimality in ILP? Can a solution be feasible but not optimal?
+A: Feasibility: a solution satisfies all constraints — every node visited, capacity not exceeded, subtours eliminated. Optimality: among all feasible solutions, this one has the minimum objective value. A solution can absolutely be feasible but not optimal — e.g., using 3 vehicles when 2 suffice. Your heuristic produces feasible solutions but not necessarily optimal ones. Your ILP aims for optimality. A model can also be infeasible (no solution satisfies all constraints) — which is what happened with Balikpapan.
+
+Q: What is a subtour and why must it be eliminated? Give a concrete example using your depot and delivery nodes.
+A: A subtour is a closed loop that doesn't include the depot. Example: vehicle travels Node_2 → Node_6 → Node_9 → Node_2, forming a triangle that never touches Depot Batam. This is mathematically feasible for flow conservation but physically impossible — how does the vehicle get to Node_2 in the first place without leaving the depot? MTZ prevents this by enforcing a strict visit ordering: if vehicle travels 2→6, then u_6 > u_2 must hold. The loop 2→6→9→2 would require u_2 > u_2 — a contradiction.
+
+
+================================================
+CATEGORY: ILP MODEL
+================================================
+
+Q: Walk me through your objective function. What does each term represent and why are there two separate cost components?
+A: Objective: min ΣΣΣΣc_ijl·x_ijkl + ΣΣf_l·y_kl. First term: total fuel/travel cost — c_ijl = (d_ij/e_l)×P_BBM_l, where d_ij is OSRM road distance, e_l is fuel efficiency of vehicle type l, P_BBM_l is fuel price (Rp10,000/L gasoline for Blind Van & Pickup, Rp6,800/L diesel for Engkel & CDD Box). Second term: fixed activation cost — f_l·y_kl, where f_l is fixed cost per vehicle type activation (Rp150,000–500,000). Two components because activating a vehicle has a fixed overhead regardless of distance driven.
+
+Q: Your model has 4 subscripts: i, j, k, l. Explain each one and the distinction between k and l — many students confuse these.
+A: i,j = nodes (0=depot, 1..n=delivery nodes) — represent origin and destination of travel arc. l = vehicle TYPE (1=Blind Van, 2=Pickup Bak, 3=Engkel, 4=CDD Box) — determines capacity (W_l, V_l), fuel efficiency (e_l), fuel type, and fixed cost (f_l). k = vehicle UNIT (1,2,3) — each type has 3 identical physical units. So k distinguishes unit 1 of Blind Van from unit 2 of Blind Van, which have identical specs but can operate simultaneously on different routes. Total fleet = 4 types × 3 units = 12 vehicles.
+
+Q: Explain Constraint C1 (single visitation) and C2 (flow conservation). Why are both needed? Can't one replace the other?
+A: C1: ΣΣΣ x_ijkl = 1 for each delivery node i. Ensures every node is visited by exactly one vehicle. C2: Σ x_jikl = Σ x_ijkl for each delivery node i per vehicle (k,l). If a vehicle enters node i, it must also leave node i (flow in = flow out). They serve different purposes — C1 guarantees each node is served exactly once globally. C2 guarantees route continuity per vehicle. Without C1, a node could be served by multiple vehicles. Without C2, a vehicle could enter a node and never leave (dead end) or leave without entering (phantom route).
+
+Q: In MTZ subtour elimination, explain all the components of: u_ikl - u_jkl + n × x_ijkl ≤ n-1
+A: u_ikl = position/order variable for node i on vehicle (k,l). u_jkl = same for destination node j. x_ijkl = binary arc variable (1 if vehicle k,l travels i→j). n = total delivery nodes (big-M coefficient). n-1 = RHS upper bound. When x_ijkl=1: constraint becomes u_i - u_j ≤ -1, forcing u_j > u_i — strict ordering. When x_ijkl=0: constraint becomes u_i - u_j ≤ n-1, always satisfied (non-binding). Depot (node 0) excluded from u variables — handled by C3. Applies for i,j=1..n only.
+
+Q: Write out your objective function from memory and explain every symbol.
+A: min ΣΣΣΣc_ijl·x_ijkl + ΣΣf_l·y_kl. c_ijl = (d_ij/e_l)×P_BBM_l = fuel cost per arc per vehicle type. x_ijkl ∈ {0,1} = 1 if vehicle unit k of type l travels arc i→j. f_l = fixed activation cost per vehicle type l. y_kl ∈ {0,1} = 1 if unit k of type l is activated. Two terms: travel cost (distance-dependent, varies by fuel type) + fixed cost (per dispatch, regardless of distance). Subscripts: i,j=nodes (0..n), k=unit (1..3), l=type (1..4).
+
+Q: What are the 4 subscripts i, j, k, l? A penguji might ask you to explain why you need both k and l — most papers use only one vehicle index.
+A: i,j = nodes (0=depot, 1..n=delivery). l = vehicle TYPE — determines all physical specs: W_l capacity, V_l volume, e_l efficiency, P_BBM_l fuel price, f_l fixed cost. k = vehicle UNIT — there are 3 identical physical units of each type, allowing up to 3 simultaneous routes of the same type. k distinguishes unit 1 from unit 2 from unit 3 of the same Blind Van. Without k, you can't model multiple simultaneous dispatches of the same vehicle type.
+
+Q: Explain Constraint C3b. Why does your model need it when C3 already limits depot departure?
+A: C3: Σ x_0jkl ≤ 1 — each vehicle departs at most once. C3b: Σ x_0jkl ≤ y_kl — departure is linked to the activation indicator. C3b is necessary to trigger the fixed cost in the objective. If a vehicle departs (Σ x_0j = 1), then y_kl must be 1, which adds f_l to the objective. Without C3b, the solver could use a vehicle without paying its fixed cost — the activation variable y_kl would remain 0 even when the vehicle is used.
+
+Q: Why do you have both C4 (weight) and C5 (volume)? Can C4 alone ensure feasibility?
+A: No. C4 alone only prevents weight overload. A vehicle could be under weight capacity but physically overfull. Example in S05: Node 3 (395.5 kg, 4.889 CBM) — only 395 kg, well under any vehicle's weight limit, but 4.889 CBM nearly fills a Pickup Bak (5.0 CBM) entirely. C4 alone would permit packing additional nodes into that vehicle even though there is no physical space. C5 is what makes the model 2-dimensional and physically realistic.
+
+Q: What is the role of the u_ikl variable in your model? What constraint uses it?
+A: u_ikl is the MTZ position/ordering variable — a continuous non-negative variable representing the visit sequence of node i when served by vehicle unit k of type l. Used in C6: u_ikl - u_jkl + n·x_ijkl ≤ n-1. When x_ijkl=1, this forces u_j > u_i, creating a strict ordering that prevents cycles. The depot (node 0) is excluded from u variables because depot visits are handled by C3.
+
+Q: Your model has C1 through C7 plus C3b. Summarize each constraint in one sentence each.
+A: C1: every delivery node is visited exactly once by exactly one vehicle. C2: flow conservation — if a vehicle enters a node, it must leave. C3: each vehicle departs from and returns to the depot at most once. C3b: departure activates the fixed cost y_kl. C4: total weight loaded on each vehicle does not exceed W_l. C5: total volume loaded on each vehicle does not exceed V_l. C6: MTZ subtour elimination — prevents disconnected loops. C7: x_ijkl ∈ {0,1}, y_kl ∈ {0,1}, u_ikl ≥ 0.
+
+Q: Why does your model use asymmetric distances (d_ij ≠ d_ji)? What would be wrong with assuming symmetry?
+A: OSRM computes road distances on directed graphs — one-way streets, road restrictions, and different available routes mean the road distance from A to B is often different from B to A. Your distance matrix is explicitly asymmetric. Assuming symmetry would either use incorrect distances or require averaging d_ij and d_ji, both of which introduce error in fuel cost calculations. This is why your code builds a full (n+1)×(n+1) matrix, not a triangular one.
+
+Q: How does OR-Tools' RoutingModel map to your ILP formulation? Which constraint is handled implicitly?
+A: RoutingModel maps naturally: arc cost callbacks implement c_ijl·x_ijkl, SetFixedCostOfVehicle implements f_l·y_kl, AddDimensionWithVehicleCapacity implements C4 and C5. Flow conservation and depot departure/return (C1–C3, C3b) are handled structurally by OR-Tools' routing framework. C6 (MTZ subtour elimination) is handled implicitly — OR-Tools' internal search enforces connected routes by construction, so explicit MTZ constraints are not needed in the code despite being in the mathematical model.
+
+Q: MTZ is known to produce a weak LP relaxation. Why didn't you use DFJ (Dantzig-Fulkerson-Johnson) subtour elimination, which is tighter?
+A: DFJ uses exponentially many constraints (one per subset S of nodes, |S|≥2). For n=10 this means 2^10 - 2 = 1022 possible subsets, making it intractable to enumerate upfront. DFJ is typically implemented via branch-and-cut (adding violated cuts lazily), which requires more advanced solver infrastructure. MTZ adds only n^2 constraints and fits naturally in a LINDO/LP file format, which is a requirement of your thesis. For your instance sizes (n≤22), the MTZ weakness doesn't significantly affect solution time because the ILP is small enough to solve regardless.
+
+Q: Why does your model have UNITS_PER_TYPE = 3? What if the company actually owns 5 Blind Vans — how would you change the model?
+A: UNITS_PER_TYPE=3 means each vehicle type has 3 identical physical vehicles available simultaneously. Change to 5 units: simply update UNITS_PER_TYPE=5 in the FLEET configuration. The VEHICLES list would grow from 12 to 5×4=20 entries. OR-Tools handles this automatically — RoutingIndexManager receives NUM_VEHICLES=20. The mathematical model scales: more vehicle slots available but the solver will still minimize activated vehicles. No structural change to C1–C7 is needed — only the fleet size parameter changes.
+
+
+================================================
+CATEGORY: YOUR CODE
+================================================
+
+Q: Your ILP uses OR-Tools with GLS (Guided Local Search) and a 30-second time limit. How do you know the solution is optimal, not just a good approximation?
+A: OR-Tools CP Routing + GLS finds best-solution-within-time, not certified optimum. Confidence comes from: (1) convergence evidence — all 6 scenarios plateau by 20 seconds, 5 of 6 converge within 5 seconds, zero change from 20s to 300s. (2) Small instance size — n=8–10 is tractable enough for GLS to exhaust local improvements. (3) LINDO cross-validation — independent mathematical formulation produces consistent routing structure. Cannot claim duality gap certificate. Formal optimality certification via CP-SAT is recommended as future work.
+
+Q: Your ILP program uses OR-Tools RoutingModel with GLS. Is this a true ILP solver or a metaheuristic? Be specific.
+A: It is OR-Tools' CP Routing solver with a metaheuristic improvement phase. PATH_CHEAPEST_ARC provides an initial feasible solution (deterministic greedy construction). GUIDED_LOCAL_SEARCH then iteratively improves it by penalizing frequently used arcs to escape local optima. This is NOT a Branch-and-Bound MIP solver. It does not produce a duality gap certificate. The distinction matters: you cannot claim mathematical proof of global optimality from GLS output alone.
+
+Q: Your sensitivity analysis tested 7 time limits: 5, 10, 20, 30, 60, 120, 300 seconds. What exactly did you find and what does it prove?
+A: 5 of 6 scenarios converge at 5 seconds. Only S03 Manado improves once between 5s→20s (cost decreases, vehicle count changes). From 20s through 300s: zero changes across all scenarios. This plateau demonstrates the solver has exhausted local improvements — consistent with having found a global optimum for these small instances (n=8–10). The 30s limit was chosen as the buffer above the 20s convergence point.
+
+Q: What does PATH_CHEAPEST_ARC do? Why use it as the first solution strategy?
+A: PATH_CHEAPEST_ARC is a greedy constructive algorithm: starting from the depot, it always extends the current route by the cheapest available arc (lowest cost unvisited node). It produces a feasible initial solution rapidly — typically in milliseconds. It's appropriate here because: (1) it respects capacity constraints, (2) it provides a good starting point for GLS improvement, (3) it's deterministic and reproducible. Alternative strategies like SAVINGS or CHRISTOFIDES might produce better initial solutions but are more expensive.
+
+Q: How does your code implement the dual fuel price system (gasoline vs diesel)? Show the exact logic.
+A: In the FLEET configuration, each vehicle type has its own pbbm field: Blind Van and Pickup Bak have pbbm=FUEL_GASOLINE=10,000, Engkel and CDD Box have pbbm=FUEL_DIESEL=6,800. The travel_cost_rp function computes int(round((dist_km / vehicle_e) * vehicle_pbbm)). In the RoutingModel, one cost callback is registered per vehicle using its own cost matrix built from its specific pbbm. So the 12 vehicle slots use 4 distinct cost matrices — one per vehicle type.
+
+Q: Why does your volume callback multiply by 1,000,000 (micro-CBM)? Why not pass CBM directly?
+A: OR-Tools requires integer inputs for capacity dimensions. CBM values have 6 decimal places (e.g., 4.888896 CBM). Multiplying by 1,000,000 converts to micro-CBM integers (4,888,896) without precision loss. Similarly, weight uses grams (multiply by 1000) instead of kg to handle decimal values like 609.5 kg → 609,500 grams. This is standard practice when using OR-Tools with non-integer demands.
+
+Q: Your heuristic file is named program1_heuristic_v5.py but the method string in results says "heuristic_kmeans_bfd_gnn". Looking at the actual code, what method does it truly implement?
+A: Effectively BFD + GNN only. The kmeans_cluster() function is called and produces clusters, but the clusters variable is never passed into bfd_assign_nodes_to_vehicles(). BFD always receives the full delivery_nodes list globally, regardless of k. The k-loop is redundant because every iteration of k produces identical BFD input → identical vehicle assignments → identical costs. The best_k_clusters value in results reflects whichever k first matched the lexicographic optimum, not meaningful clustering behavior.
+
+Q: In your heuristic, how is the "best k" selected? What does best_k_clusters=1 mean for S05?
+A: The loop runs k=1 to min(n, 12). For each k, BFD runs on the full global node list (K-Means output unused). Since BFD output is k-invariant, all 12 iterations produce the same vehicle count and cost. The lexicographic comparison (fewer vehicles first, then lower cost) first updates best_result at k=1 and never updates again because all subsequent k produce identical results. So best_k_clusters=1 simply means "the first iteration won by default." It has no geographic meaning.
+
+
+================================================
+CATEGORY: RESULTS
+================================================
+
+Q: Your ILP achieves 68.97% vehicle reduction compared to the heuristic. Is this a fair comparison? What are the limitations of your heuristic baseline?
+A: The heuristic has a known implementation flaw: K-Means clustering output is computed but never passed into BFD — the clusters variable is unused. BFD always receives all nodes globally. This means the heuristic degrades to pure BFD + GNN, not K-Means + BFD + GNN as labeled. The comparison is still valid as a heuristic vs. exact method comparison, but you should acknowledge that a properly integrated K-Means might produce fewer vehicles (geographically compact routes). The 68.97% improvement may be partially inflated by this flaw.
+
+Q: Volume is consistently the binding constraint with 89.62% average utilization vs 32.30% for weight. What does this imply for logistics practice, and did this result surprise you?
+A: It implies that last-mile consumer goods delivery in Indonesia is volume-constrained, not weight-constrained. This validates the necessity of 2D capacity modeling — a 1D model using only weight would overestimate vehicle capacity and assign more parcels per vehicle than physically fits. Practical implication: logistics operators should prioritize vehicle selection based on CBM capacity, not just payload tonnage. AWBs in consumer goods (e-commerce, retail) tend to be bulky and lightweight. This makes intuitive sense for categories like clothing, electronics packaging, foam products.
+
+Q: S05 (Batam) required 7 vehicles in the heuristic. Walk me through why volume constraints force this many vehicles.
+A: S05 has 10 nodes with total demand 3,415 kg and 23.20 CBM. Several individual nodes exceed Blind Van (2.0 CBM) and near-max Pickup Bak (5.0 CBM) capacity alone — Node 3 (4.889 CBM) and Node 5 (4.603 CBM) each nearly fill a Pickup Bak independently. Node 1 alone (609.5 kg, 2.739 CBM) requires at least an Engkel due to its volume. BFD must assign these high-volume nodes to separate large vehicles. The volume fragmentation forces 7 active vehicles even though total weight (3,415 kg) is well within a few large vehicles.
+
+Q: State your 4 key quantitative results from memory. What do they mean operationally?
+A: (1) 68.97% vehicle reduction: ILP uses avg 1.50 vs heuristic 4.83 vehicles — fewer trucks dispatched saves fixed activation costs and reduces street congestion. (2) 26.87% distance reduction: better route sequencing reduces total km driven. (3) 36.20% total cost reduction: combination of fewer vehicles (fixed cost saving) and shorter routes (fuel saving). (4) Volume binding at 89.62% vs weight at 32.30%: last-mile consumer goods are volume-constrained, validating the 2D formulation necessity.
+
+Q: Your ILP produces fewer vehicles than the heuristic. Is this always better? What are the tradeoffs?
+A: Fewer vehicles means lower fixed costs and often lower total cost — which is your primary objective. Tradeoffs: (1) fewer vehicles with more stops per route = longer individual routes and more delivery time per vehicle, potentially violating customer time expectations. (2) If one vehicle breaks down, more deliveries are impacted. (3) Driver working hours may exceed limits with longer routes. Your model does not include time windows or driver hour constraints — these are acknowledged scope limitations that could change the optimal solution if included.
+
+Q: ILP reduces distance by 26.87% but fuel cost only by 8.71%. Why is the fuel cost reduction so much smaller?
+A: Two reasons. First, the heuristic uses more smaller vehicles (more Blind Vans and Pickup Baks with gasoline) while ILP consolidates into fewer larger vehicles (Engkel and CDD Box with diesel). Diesel is cheaper (Rp 6,800/L) but these vehicles are less fuel-efficient (4.5–6.0 km/L vs 12–13.5 km/L for gasoline vehicles). The per-km cost for a CDD Box is (6800/4.5) = Rp 1,511/km vs Blind Van (10000/13.5) = Rp 741/km. Second, even with shorter total distance, the larger vehicles cost more per km to run.
+
+Q: S05 Batam: ILP assigns 2 vehicles (Engkel + CDD Box). Explain why exactly these two types were chosen.
+A: Total demand: 3,415 kg weight, 23.20 CBM volume. Volume is binding. Nodes 3 (4.889 CBM) and 5 (4.603 CBM) are high-volume individually. CDD Box (15.0 CBM) can take the high-volume nodes plus several others. Engkel (9.0 CBM) takes remaining nodes. Together: 15.0 + 9.0 = 24.0 CBM capacity covers 23.20 CBM demand. Weight: 4,500 + 2,250 = 6,750 kg capacity covers 3,415 kg demand (only 50.59% weight utilization). The solver picks the cheapest combination of vehicle types that satisfies both constraints simultaneously.
+
+Q: Your heuristic runtime is ~0.78 seconds vs ILP runtime of 30 seconds — roughly 38× slower. Is this a meaningful comparison?
+A: The 30s is the time limit, not actual solve time. OR-Tools finds solutions in seconds for n=8–10 — sensitivity analysis shows convergence by 20s. The heuristic runs in <1s because BFD+GNN are O(n²) algorithms with no search. The comparison is somewhat misleading: OR-Tools could be capped at 5s with identical results for these scenarios. The 30s limit was conservatively chosen. For practical deployment: both methods are fast enough for daily planning. The 38× figure overstates the actual difference at these instance sizes.
+
+Q: Your weight utilization for ILP is only 32.30% even though you claim ILP is more efficient. How do you explain this?
+A: 32.30% weight utilization is not inefficiency — it reflects that the cargo is volume-dominated. The solver correctly chooses vehicles large enough to fit all volume, which means those vehicles have significant weight capacity remaining. A weight-only model would select smaller, cheaper vehicles that are weight-efficient but physically cannot fit the cargo. Low weight utilization is the expected and correct outcome when volume is the binding constraint. The relevant metric is volume utilization (89.62%), which is high, confirming tight vehicle selection.
+
+Q: Your average ILP vehicle count is 1.50 across 6 scenarios. What does 0.50 of a vehicle mean? Break down the per-scenario counts.
+A: 1.50 is a mean of integer values. Per scenario: S01=1, S02=2, S03=2, S04=1, S05=2, S06=1 (approximate — verify with your results CSV). Mean=(1+2+2+1+2+1)/6=9/6=1.5. The 0.5 is a statistical artifact of averaging integers. Each scenario uses either 1 or 2 vehicles. Scenarios with higher total volume demand (S02, S03, S05) require 2 vehicles because no single vehicle can fit all cargo within volume constraints.
+
+
+================================================
+CATEGORY: CRITICAL QUESTIONS
+================================================
+
+Q: A penguji might say: 'K-Means is listed in your method title but the code shows it has no effect on the output. This is misleading. How do you defend this?'
+A: Acknowledge it directly and honestly — scientific integrity is valued. The K-Means geographic clustering was architecturally designed to pre-partition nodes into vehicle zones, but due to an implementation oversight, the clusters variable was computed but not passed into BFD. The actual implemented method is BFD + GNN globally. You can argue the comparison remains valid: the heuristic result still represents a reasonable baseline (global BFD packing is actually tighter than per-cluster BFD), and the ILP advantage is confirmed. Recommend framing it as 'implemented heuristic effectively uses global BFD + GNN' in limitations.
+
+Q: Your dataset uses only 6 scenarios across 3 cities. A penguji might challenge the generalizability of your conclusions. How do you respond?
+A: Acknowledge the limitation. The 6 scenarios represent real operational data from KK non-Jakarta depots (Batam, Manado, Pekanbaru), covering n=8–22 delivery nodes and 3 different cities with different geographic layouts. The consistent pattern across all 6 scenarios (volume binding, ILP superior in vehicles) strengthens rather than weakens the argument — it's not a single-case result. Generalizability to other depot types or larger n requires further research. ILP's scalability becomes a concern beyond n≈30. This is appropriate scope for a Master's thesis.
+
+Q: Your fixed costs (Rp150,000–500,000) — where do these numbers come from? Are they validated with real logistics data?
+A: Values derived from bottom-up ownership cost model: depreciation (10–12%/year of OTR), routine maintenance, insurance TLO, PKB tax + STNK, and driver wage prorated per working day. Market references: Blind Van OTR ~Rp179jt (Mobil123 2025), Engkel CDE OTR Rp432.9jt (Oto.com 2026), CDD Box OTR Rp480–600jt (Mitsubishi 2025). Calculated costs: BV ~Rp176k, PU ~Rp185k, Engkel ~Rp337k, CDD ~Rp505k. Thesis values are within ±15% of real-cost estimates. Fixed costs are not primary drivers of the 68.97% vehicle reduction — volume constraints are. Sensitivity: ±50% change in f_l does not alter vehicle assignment patterns.
+
+Q: DANGER: Your thesis claims to use ILP but OR-Tools with GLS is technically a metaheuristic. If a penguji says "this is not ILP," how do you respond?
+A: Acknowledge the nuance directly. The mathematical formulation IS a classical ILP model (linear objective, linear constraints, binary decision variables, MTZ subtour elimination). The implementation uses OR-Tools' CP Routing solver with GLS — which maps the ILP structure to a constraint programming framework with metaheuristic improvement. This is a common and accepted approach in operations research for VRP instances. The terminology "ILP-based model" in the thesis title refers to the mathematical formulation, not the solver mechanism. The LINDO model cross-validates the formulation independently.
+
+Q: DANGER: K-Means is in your method title and Bab III but does nothing in the code. If a penguji asks you to demonstrate K-Means's effect on the result, what do you say?
+A: Be transparent immediately. The K-Means clustering was architecturally intended to pre-partition nodes geographically into vehicle service zones before BFD assignment. Due to an implementation oversight, the clusters output from kmeans_cluster() was not passed into bfd_assign_nodes_to_vehicles() — BFD receives the full global node list regardless of k. The practical heuristic is BFD + GNN. State this as a known limitation, explain why global BFD may actually produce tighter packing than per-cluster BFD, and note that the comparison against ILP remains valid as a baseline contrast.
+
+Q: DANGER: You have only 6 scenarios. A penguji might say this is statistically insufficient to draw general conclusions. Defend your sample size.
+A: Six scenarios represent all available scenarios from your dataset that satisfy both the ILP tractability constraint (n≤30) and the feasibility constraint (no single node exceeding CDD Box capacity). This is a census, not a sample — you used every eligible scenario, not a subset. Across these 6, the pattern is completely consistent: volume binding in all 6, ILP superior in all 6. Consistent results across all eligible instances is strong evidence. Acknowledge that generalization beyond these depot cities and cargo types requires further research — standard scoping for a Master's thesis.
+
+Q: DANGER: You excluded Balikpapan because one node had 16.33 CBM. But couldn't you just split that delivery into two trips or use a different aggregation?
+A: Good challenge. The exclusion was based on the model's assumption of single-trip delivery — each route starts and ends at the depot with one vehicle load. Splitting a node would require either: (1) modeling multi-trip routes, which your current formulation doesn't support, or (2) sub-splitting at the AWB level before aggregation, which would require knowing which AWBs at that location can be delivered separately. The exclusion is the cleanest methodological choice and is explicitly documented as a scope limitation. Balikpapan's exclusion is itself a finding: demonstrates what happens when cargo exceeds fleet capacity.
+
+Q: Your fixed costs appear in both the thesis and the README but differ slightly. The README shows Rp300k for Engkel and Rp450k for CDD — your thesis uses Rp350k and Rp500k. Which is correct and why?
+A: This is a versioning inconsistency. The README reflects an earlier version of the cost parameters before the final calibration. The thesis (and v5 code) uses Rp350k for Engkel and Rp500k for CDD Box — these are the values used in all reported results. The README was not updated when the cost parameters were revised. Acknowledge this discrepancy if raised, confirm the code and thesis are consistent with each other, and note that the README is documentation artifact that lagged the final implementation.
+
+Q: Your heuristic sorts nodes by weight (descending) in BFD but gives volume a ×100 weighting factor in the slack function. What if you had sorted by volume instead? Would results change?
+A: Sensitivity analysis confirmed: sorting by volume instead of weight produces identical vehicle counts across all 6 scenarios. However, node-to-vehicle assignments differ in 4 out of 6 scenarios — different nodes end up in different vehicles, though the same number of each vehicle type is used. This suggests the volume-dominant nature of the cargo means both sorting strategies reach the same packing efficiency. The ×100 volume scaling factor in slack = (rem_w - w) + (rem_v - v)×100 effectively makes volume tighter-fit prioritized even when weight-sorted, so the two approaches converge.
+
+Q: Your LINDO model uses "< 1" for C3 constraints. Is this syntactically correct in LINDO?
+A: In LINDO, "<" is interpreted as "≤" — LINDO does not support strict inequality (<) for LP/ILP constraints. So writing "< 1" in LINDO means "≤ 1" which is exactly your intended constraint (at most one departure/return). This is correct and standard LINDO syntax. However the "<" symbol could confuse readers of the thesis who expect "≤" notation. Clarify in the thesis text that LINDO uses "<" to represent "≤" in its constraint syntax.
+
+Q: DANGER: A penguji may ask why you didn't use a commercial solver like CPLEX or Gurobi which would give certified optimal solutions. How do you respond?
+A: Two reasons: (1) Cost and accessibility — CPLEX and Gurobi require commercial licenses (thousands of USD annually). Google OR-Tools is free and open-source, appropriate for academic research without institutional license access. (2) Reproducibility — anyone can reproduce your results with OR-Tools without needing a commercial license. For n=8–10, OR-Tools + GLS with convergence evidence is sufficient for Master's thesis purposes. Commercial solvers would be appropriate for a follow-up study with larger instances where optimality certification matters more.
+
+
+================================================
+CATEGORY: DATA & DATASET
+================================================
+
+Q: Why does your final dataset use only 6 scenarios from 3 cities (Batam, Manado, Pekanbaru)? What happened to the other depots?
+A: The original dataset covers 7+ depots. Exclusions: (1) Balikpapan excluded because one aggregated node had 16.33 CBM volume — exceeding the largest vehicle capacity (CDD Box: 15.0 CBM), making the scenario infeasible. (2) Jakarta excluded due to 65–194 delivery locations per day — too large for ILP tractability. (3) Jatiasih/other CLIENT_02 depots not in final v2 dataset. Remaining 3 cities × 2 dates = 6 scenarios. This exclusion process is itself a finding: demonstrates ILP's scalability limitation.
+
+Q: What is AWB aggregation? Why do you aggregate, and what are the assumptions and risks of doing so?
+A: AWBs (Airway Bills) are individual parcels. Multiple AWBs going to the same geographic location are merged into one delivery node with summed weight and volume. Justification: reduces n from ~174 to 53 nodes across 6 scenarios, making ILP tractable. Assumption: all AWBs at the same coordinate are delivered in one stop — the "last 100m" problem (exact door delivery within a location) is not modeled. Risk: if two AWBs at the same coordinate are actually different customers requiring separate visits, aggregation is incorrect. Acknowledged as a scope limitation.
+
+Q: How were coordinates rounded to 3 decimal places? What is the precision implication of this?
+A: 3 decimal places = ~111 meters of precision at the equator (1° latitude ≈ 111km, 0.001° ≈ 111m). This means two locations within ~157 meters (diagonal) could appear at the same coordinate and be incorrectly merged during AWB aggregation. For urban Indonesian logistics this is acceptable — within the same building or block. However it does introduce a small systematic bias: actual road distances may differ slightly from what OSRM computes for the rounded coordinates. Acknowledged as a limitation.
+
+Q: What is OSRM and why did you use it instead of Google Maps or straight-line Haversine distance?
+A: OSRM (Open Source Routing Machine) computes actual road distances on a real road network graph — accounts for one-way streets, road hierarchy, and turn restrictions. Haversine gives straight-line great-circle distance, systematically underestimating actual road distance in urban areas (often 30–50% shorter than road distance). Google Maps would be more accurate but requires a paid API key and rate limits. OSRM is free, open-source, and provides asymmetric matrices. Your code queries the public OSRM API with Haversine fallback if unreachable.
+
+Q: S03 Manado is your LINDO representative scenario. Why S03 specifically? Why not S05 which has more nodes?
+A: S03 Manado (n=8) was chosen because 8 nodes produces a manageable LINDO model that can be written out completely and validated manually — with n=8 there are 8×7×3×4=672 binary x variables plus 12 y variables plus 96 u variables. S05 (n=10) produces 10×9×3×4=1080 binary variables — larger but still manageable. S03 was chosen for presentation clarity. The LINDO model for both S03 and S05 was generated, but S03 serves as the illustrative example in the thesis.
+
+Q: Your dataset was anonymized. What was anonymized and what was kept? Could the company be identified from what remains?
+A: Anonymized: company names (→ CLIENT_01/02), AWB numbers (→ AWB_00001 etc.), delivery location names (→ Node_01..n), customer identities, item names (→ Goods). Kept: GPS coordinates (rounded to 3dp), weight, volume, date, depot city names. Risk: depot city + dates + geographic coordinates could potentially re-identify the logistics operator if combined with public shipping records. However, 3dp rounding and generic node labels provide reasonable de-identification for academic research purposes.
+
+
+================================================
+CATEGORY: BLIND SPOTS
+================================================
+
+Q: BLIND SPOT: What is the difference between CP-SAT and RoutingModel in OR-Tools? Which would give you certified optimality?
+A: RoutingModel (what you use) is OR-Tools' specialized VRP/routing solver built on constraint programming with dedicated routing constraints and search strategies. It is efficient for routing but uses GLS which is metaheuristic — no optimality certificate. CP-SAT is OR-Tools' general-purpose satisfiability solver that uses MILP with branch-and-bound and can return OPTIMAL status with a proven zero gap. For certified optimality on your 6 scenarios, re-solving with CP-SAT and checking for OPTIMAL status would be the correct approach and is recommended as future work.
+
+Q: BLIND SPOT: What does "status: SOLUTION_FOUND" in your ILP output actually mean? Does it mean optimal?
+A: No. SOLUTION_FOUND means OR-Tools returned a feasible solution before the time limit expired. It does not mean optimal. If you used CP-SAT, you could get OPTIMAL (proven optimal), FEASIBLE (feasible but not proven optimal), INFEASIBLE, or UNKNOWN. With RoutingModel + GLS, the solver simply returns whatever best solution it found within 30 seconds. Your convergence evidence (plateau at 20s) provides empirical confidence but not mathematical proof.
+
+Q: BLIND SPOT: Your code registers one callback per vehicle (12 callbacks for 12 vehicles). But 3 units of the same type share the same cost matrix. Is this inefficient?
+A: Yes, slightly. Three Blind Vans (units 1, 2, 3) all use the same cost matrix but register 3 separate callbacks pointing to the same data. You could register 4 callbacks (one per type) and assign them to the 3 units of each type via SetArcCostEvaluatorOfVehicle. The current approach works correctly but creates 3 redundant callback registrations per type. For n=8–10 this has no measurable performance impact. For larger n it could increase memory usage slightly. Acceptable for a Master's thesis implementation.
+
+Q: BLIND SPOT: What happens in your model if OSRM is unavailable? Are your results still valid?
+A: The code falls back to Haversine (straight-line great-circle) distances automatically. Haversine systematically underestimates actual road distances by ~20–40% in urban Indonesian areas. This affects fuel cost calculations (lower distances → lower fuel costs) and route ordering (GNN picks different nearest neighbors). Results using Haversine are still internally consistent but not directly comparable to OSRM results. Your thesis must document which distance method was used for each scenario — the results_ilp_v5.csv has a distance_method column for this purpose.
+
+Q: BLIND SPOT: Your model allows a vehicle to potentially visit the depot mid-route. Is this a problem?
+A: Flow conservation in C2 applies only to delivery nodes i=1..n, not the depot. The depot (node 0) is the fixed start/end point handled by C3. OR-Tools' RoutingModel structurally enforces that all routes start and end at node 0 and do not revisit it mid-route. In the mathematical ILP formulation, this is handled by excluding node 0 from the MTZ u variables and from the flow conservation equations. Mid-route depot visits are not possible in your model structure.
+
+Q: BLIND SPOT: You use integer Rp values in OR-Tools by rounding arc costs. What precision is lost and could it affect route selection?
+A: travel_cost_rp uses int(round(...)) — rounding to the nearest Rupiah. Maximum rounding error per arc: 0.5 Rp. With ~10 arcs per route and 2 routes, total possible rounding error: ~10 Rp out of costs in the hundreds of thousands of Rp range. Relative error <0.001%. This is negligible and cannot affect route selection in practice. The volume capacity uses micro-CBM (×1,000,000), giving 6 decimal places of precision — also negligible error.
+
+Q: BLIND SPOT: OR-Tools' RoutingModel enforces that every delivery node is visited. But how? There is no explicit "must visit" constraint in your code.
+A: OR-Tools' RoutingModel enforces mandatory visitation structurally — every node added to the model via manager.IndexToNode() is required to be visited by exactly one vehicle. This is the default behavior. If you wanted optional visits (pickup/delivery problems), you would call routing.AddDisjunction(). Since you never call AddDisjunction(), all nodes are mandatory — implementing C1 (single visitation) without an explicit constraint. This is a key advantage of the routing framework over raw ILP.
+
+Q: BLIND SPOT: Can your model handle scenarios where total demand exceeds total fleet capacity? What happens?
+A: No. Your model has 12 vehicles with total weight capacity 3×(830+1250+2250+4500)=26,490 kg and total volume 3×(2+5+9+15)=93 CBM. If total scenario demand exceeds these, OR-Tools returns NO_SOLUTION. Your pre-check in the heuristic catches individual nodes exceeding CDD Box capacity (the Balikpapan case). However, neither program explicitly checks whether total demand exceeds total fleet capacity before solving. For robustness, a pre-check comparing Σweight_i vs 26,490 and Σvolume_i vs 93 should be added.
+
+Q: BLIND SPOT: What is WCSS and how does K-Means minimize it?
+A: WCSS = Within-Cluster Sum of Squares = J(k) = Σⱼ Σᵢ∈Cⱼ ||pᵢ − μⱼ||² where μⱼ is the centroid of cluster j and pᵢ is each point in that cluster. K-Means iteratively: (1) assigns each point to its nearest centroid, (2) recomputes centroids as the mean of assigned points, until assignments stop changing (convergence). K-Means++ initialization (which your code uses via init="k-means++") places initial centroids spread apart using a probability proportional to squared distance, reducing convergence to poor local optima.
+
+Q: BLIND SPOT: Your thesis compares ILP to heuristic on the same dataset. But the heuristic was run first and ILP second — could there be any data leakage or order bias?
+A: No data leakage. Both methods receive identical inputs: the same distance matrix (built from the same OSRM query) and the same delivery node list. The heuristic and ILP are completely independent — neither informs the other's solution. The distance matrix is built once per scenario and passed to both. There is no training/test split issue because this is an optimization problem, not machine learning — the "correct answer" is mathematically defined by the objective function, not learned from data.
+
+Q: BLIND SPOT: Your code uses all_nodes.index(nd) to find node indices during route reconstruction. What computational complexity issue does this introduce?
+A: list.index() is O(n) — it scans the list linearly. In the heuristic's GNN section, for each assigned node, you call all_nodes.index(nd) to find its position in the distance matrix. This is called inside nested loops, giving O(n²) or O(n³) overall. For n=8–10 this is negligible. For larger n it would be inefficient — a dictionary mapping node objects to indices would give O(1) lookup. This is a code quality issue, not a correctness issue, and acceptable at this scale.
+
+Q: BLIND SPOT: Your thesis mentions the OR-Tools RoutingModel implements subtour elimination internally. Exactly how does OR-Tools prevent subtours without explicit MTZ constraints?
+A: OR-Tools' CP Routing solver prevents subtours by construction of the search space — it represents routes as chains starting and ending at the depot, using a linked-list structure where NextVar(i) points to the next node in the route. Any assignment of NextVar values that doesn't form a valid chain starting/ending at the depot is structurally infeasible in the CP model. This is fundamentally different from MTZ which adds auxiliary variables. OR-Tools' approach is tighter and more efficient for routing problems specifically.
+
+
+================================================
+CATEGORY: PRACTICAL APPLICATION
+================================================
+
+Q: How would a logistics manager actually use your model in daily operations? What is the required input and how long does it take to run?
+A: Input: list of AWBs for the day → aggregated by geographic node → weight and volume per node. The OSRM distance matrix is built from node coordinates. OR-Tools ILP runs in under 30 seconds for n≤22. Daily workflow: collect morning AWBs → run aggregation script → run ILP solver → output vehicle assignments and routes. Practical barrier: requires technical setup (Python, OR-Tools, OSRM access). Recommend packaging as a web interface or API for non-technical dispatchers. The 30s runtime makes it feasible for real-time replanning.
+
+Q: Your model assumes all vehicles start and end at the depot. In practice, vehicles may start from different locations or make multiple trips per day. How does this limitation affect your results?
+A: Single-depot, single-trip assumption is standard CVRP. Real operations may involve: (1) multi-depot — handled by running separate models per depot, which is what your 3-city setup does. (2) Multiple trips per day — if total demand exceeds fleet capacity for one trip, vehicles return and reload. Your model doesn't model this. (3) Time windows — you don't include delivery time constraints. These are extensions (MDVRP, VRPTW) that would add complexity. Acknowledged as scope limitations and future work.
+
+Q: If you were to extend this research, what would be your top priority — adding time windows, real-time traffic, or scaling to larger n? Justify your choice.
+A: There's no single right answer — the examiner wants to see your reasoning. Time windows (VRPTW): high real-world value since customers expect delivery time slots; most impactful for practical adoption. Real-time traffic: important for accurate costs but requires live OSRM/Maps API; less critical for daily planning which uses historical averages. Scaling to larger n: current ILP approach struggles beyond n≈30–50; would require column generation or branch-and-price; relevant if moving to city-wide planning. Recommended answer: time windows first (highest practical value), then scaling via decomposition methods.
+
+Q: You use AWB count as a proxy for geographic clustering. Why not use exact customer addresses? What is the implication of node aggregation on solution quality?
+A: Exact addresses would give n = total AWB count (potentially hundreds), making ILP intractable. Aggregating AWBs by geographic area reduces n to 3–22 nodes per scenario, which is computationally tractable. The trade-off: within-cluster routing (last 100m delivery) is not modeled — assumed negligible or handled separately by delivery personnel. The aggregation introduces approximation in the distance matrix (centroid-to-centroid vs. exact address-to-address). This is standard practice in logistics research and explicitly acknowledged in your scope.
+
+Q: How would a logistics dispatcher actually use your ILP tool in daily operations? Walk through the workflow.
+A: Morning: collect all AWBs for the day from the WMS/TMS system. Aggregate AWBs by delivery coordinate → produce delivery node list with weight and volume. Query OSRM for distance matrix. Run program2_ilp_v5.py — takes <30 seconds for n≤10. Output: vehicle assignments and route sequences per vehicle. Dispatcher dispatches accordingly. Current gap: requires Python + OR-Tools setup and OSRM connectivity — not dispatcher-friendly. Future work: wrap in a web UI or REST API so dispatchers can trigger it with a button click.
+
+Q: Your model uses a single depot. In reality, a logistics company may have sub-depots or consolidation hubs. How would you extend the model?
+A: Multi-depot VRP (MDVRP): assign each delivery node to the nearest/cheapest depot, then solve a separate HCVRP per depot. Your current 3-city structure already does this implicitly — each scenario has one depot. True MDVRP allows vehicles to originate from different depots and potentially cross depot territories. OR-Tools supports MDVRP via multiple start/end nodes in RoutingIndexManager. Would require adding a depot assignment decision variable, significantly increasing model complexity.
+
+Q: Your dataset covers December 2025 only. How confident are you that December is representative? What if demand patterns differ in other months?
+A: December represents peak season for Indonesian e-commerce (year-end shopping, Harbolnas, Christmas). AWB volumes and geographic distributions in December may be higher and more concentrated than average months. This is a limitation — results may overstate the efficiency gains available in off-peak months when fewer AWBs exist (fewer nodes → simpler routing → smaller ILP-heuristic gap). Stated as a scope limitation: future work should validate across multiple months including low-season data.
+
+Q: If the ILP saves 36.20% cost, why wouldn't every logistics company immediately adopt it?
+A: Several real-world barriers: (1) Implementation complexity — requires technical staff familiar with Python and OR-Tools. (2) Integration — must connect to existing WMS/TMS systems for AWB data. (3) Reliability — operational staff distrust "black box" optimizers. (4) Dynamic conditions — the model is static; it doesn't handle last-minute AWB additions, vehicle breakdowns, or traffic. (5) Small n assumption — works for n≤~20; Jakarta's 200+ daily AWBs are out of scope. (6) Time windows — your model ignores customer delivery time constraints, which many clients require.
+
+Q: What would you change if you had to redo this research? What are your top 3 improvements?
+A: 1. Use CP-SAT instead of RoutingModel+GLS to obtain certified optimal solutions with provable duality gaps. 2. Fix the K-Means integration — properly pass cluster assignments into BFD so the heuristic actually implements the three-stage pipeline as described. 3. Include time window constraints (VRPTW) to make the model operationally realistic — real customers expect delivery time slots. Additional: validate across more scenarios and months, use real company-provided fixed cost data rather than market estimates.
+
+Q: Could your approach be applied to a different industry — say hospital supply chain or food delivery? What would need to change?
+A: The core ILP framework is industry-agnostic. Changes needed: (1) Hospital supply: add time windows (medicines needed by specific times), priority constraints (critical items first), temperature-controlled vehicle types. (2) Food delivery: time windows are critical (hot food), add time dimension, smaller vehicle fleet (motorcycles dominant in Indonesian food delivery). (3) Both: the 2D weight+volume formulation remains valid. Vehicle fleet parameters, fixed costs, and fuel prices would change. Mathematical structure (C1–C7) remains identical.
+
+Q: Your thesis is titled "ILP-Based Optimization Model." If someone reads only the title, they might expect a pure exact method. Is the title misleading?
+A: Technically nuanced. The mathematical model IS an ILP formulation — binary variables, linear constraints, linear objective. The title accurately describes the mathematical model used. What the title does not convey is that the computational implementation uses a routing solver with metaheuristic improvement rather than a pure Branch-and-Bound MIP solver. "ILP-Based" is the accurate framing — the model is based on ILP principles even if the solver uses CP+GLS. A more precise title might be "CP-Based Optimization Model with ILP Formulation" but this would be overly technical.
+
+Q: A penguji from industry might ask: what is the minimum number of AWBs per day below which your model adds no value over a dispatcher's manual decision?
+A: Empirical answer from your data: S04 Pekanbaru has n=9 nodes — ILP uses 1 vehicle, heuristic uses 3. S01 Pekanbaru has n=8 — ILP uses 1 vehicle, heuristic uses 2. Even for n=8, the ILP finds a meaningfully different (better) solution. For n=3 (minimum in your dataset), the optimal solution is likely obvious to a human dispatcher. Estimate: below n≈5, human dispatchers can find near-optimal solutions manually. Above n≈7, the ILP provides consistent value. The breakeven depends on dispatcher experience and whether volume constraints are non-trivial.
