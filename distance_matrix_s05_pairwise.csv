@@ -1,0 +1,56 @@
+from_id,from_label,from_name,to_id,to_label,to_name,distance_km
+0,depot,Depot Batam,1,n1,Node_01,3.3242
+0,depot,Depot Batam,2,n2,Node_02,10.7655
+0,depot,Depot Batam,3,n3,Node_03,9.3196
+0,depot,Depot Batam,4,n4,Node_04,4.9789
+0,depot,Depot Batam,5,n5,Node_05,16.1695
+0,depot,Depot Batam,6,n6,Node_06,9.8439
+0,depot,Depot Batam,7,n7,Node_07,12.4876
+0,depot,Depot Batam,8,n8,Node_08,9.0871
+0,depot,Depot Batam,9,n9,Node_09,10.0225
+0,depot,Depot Batam,10,n10,Node_10,12.5428
+1,n1,Node_01,2,n2,Node_02,8.1038
+1,n1,Node_01,3,n3,Node_03,6.6579
+1,n1,Node_01,4,n4,Node_04,2.3172
+1,n1,Node_01,5,n5,Node_05,13.5078
+1,n1,Node_01,6,n6,Node_06,7.1822
+1,n1,Node_01,7,n7,Node_07,9.8259
+1,n1,Node_01,8,n8,Node_08,8.2463
+1,n1,Node_01,9,n9,Node_09,7.3608
+1,n1,Node_01,10,n10,Node_10,9.8811
+2,n2,Node_02,3,n3,Node_03,4.9462
+2,n2,Node_02,4,n4,Node_04,7.5295
+2,n2,Node_02,5,n5,Node_05,9.3119
+2,n2,Node_02,6,n6,Node_06,1.1267
+2,n2,Node_02,7,n7,Node_07,5.672
+2,n2,Node_02,8,n8,Node_08,10.968
+2,n2,Node_02,9,n9,Node_09,3.0273
+2,n2,Node_02,10,n10,Node_10,4.2031
+3,n3,Node_03,4,n4,Node_04,5.0172
+3,n3,Node_03,5,n5,Node_05,11.8157
+3,n3,Node_03,6,n6,Node_06,3.6895
+3,n3,Node_03,7,n7,Node_07,5.0021
+3,n3,Node_03,8,n8,Node_08,11.0439
+3,n3,Node_03,9,n9,Node_09,3.5462
+3,n3,Node_03,10,n10,Node_10,6.0664
+4,n4,Node_04,5,n5,Node_05,12.2144
+4,n4,Node_04,6,n6,Node_06,5.8889
+4,n4,Node_04,7,n7,Node_07,8.5325
+4,n4,Node_04,8,n8,Node_08,8.1242
+4,n4,Node_04,9,n9,Node_09,6.0675
+4,n4,Node_04,10,n10,Node_10,8.5877
+5,n5,Node_05,6,n6,Node_06,8.8224
+5,n5,Node_05,7,n7,Node_07,13.8091
+5,n5,Node_05,8,n8,Node_08,16.192
+5,n5,Node_05,9,n9,Node_09,11.7542
+5,n5,Node_05,10,n10,Node_10,12.3401
+6,n6,Node_06,7,n7,Node_07,6.3752
+6,n6,Node_06,8,n8,Node_08,9.5675
+6,n6,Node_06,9,n9,Node_09,3.4118
+6,n6,Node_06,10,n10,Node_10,4.9063
+7,n7,Node_07,8,n8,Node_08,13.9064
+7,n7,Node_07,9,n9,Node_09,4.8316
+7,n7,Node_07,10,n10,Node_10,4.3296
+8,n8,Node_08,9,n9,Node_09,11.648
+8,n8,Node_08,10,n10,Node_10,13.8496
+9,n9,Node_09,10,n10,Node_10,3.3449

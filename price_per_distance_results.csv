@@ -1,0 +1,13 @@
+route_name,vehicle_name,leg_order,from_id,from_label,from_name,to_id,to_label,to_name,distance_km,efficiency_km_per_l,pbbm_rp_per_l,leg_cost_rp,route_total_distance_km,route_total_cost_rp
+Engkel (CDE),Engkel (CDE),1,0,depot,Depot Batam,1,n1,Node_01,3.3242,6.0,6800,3767,3.3242,3767
+Engkel (CDE),Engkel (CDE),2,1,n1,Node_01,5,n5,Node_05,13.5078,6.0,6800,15309,16.832,19076
+Engkel (CDE),Engkel (CDE),3,5,n5,Node_05,8,n8,Node_08,16.192,6.0,6800,18351,33.024,37427
+Engkel (CDE),Engkel (CDE),4,8,n8,Node_08,0,depot,Depot Batam,8.8221,6.0,6800,9998,41.8461,47425
+CDD Box,CDD Box,1,0,depot,Depot Batam,4,n4,Node_04,4.9789,4.5,6800,7524,4.9789,7524
+CDD Box,CDD Box,2,4,n4,Node_04,9,n9,Node_09,6.0675,4.5,6800,9169,11.0464,16693
+CDD Box,CDD Box,3,9,n9,Node_09,6,n6,Node_06,1.8677,4.5,6800,2822,12.9141,19515
+CDD Box,CDD Box,4,6,n6,Node_06,2,n2,Node_02,1.0765,4.5,6800,1627,13.9906,21142
+CDD Box,CDD Box,5,2,n2,Node_02,10,n10,Node_10,4.2031,4.5,6800,6351,18.1937,27493
+CDD Box,CDD Box,6,10,n10,Node_10,7,n7,Node_07,3.7062,4.5,6800,5600,21.8999,33093
+CDD Box,CDD Box,7,7,n7,Node_07,3,n3,Node_03,4.3672,4.5,6800,6599,26.2671,39692
+CDD Box,CDD Box,8,3,n3,Node_03,0,depot,Depot Batam,8.5025,4.5,6800,12848,34.7696,52540
